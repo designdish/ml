@@ -78,17 +78,17 @@ var updateJoinedParameters = function(joinValue, param, paramVal) {
 var appendParam = function(url, param, paramVal) {
     // check for the presence of a query initiator and inject one into the url if it isn't, otherwise chain the parameters with the connector
     var newLink =
-        url.indexOf("?") != -1 ?
-        url + "&" + param + "=" + paramVal :
-        url + "?" + param + "=" + paramVal;
+        url.indexOf("?") != -1
+            ? url + "&" + param + "=" + paramVal
+            : url + "?" + param + "=" + paramVal;
     return newLink;
 };
 
 var getValue = function(param) {
     var parameter =
-        getParameterByName(param) != null ?
-        getParameterByName(param) :
-        getCookie(param);
+        getParameterByName(param) != null
+            ? getParameterByName(param)
+            : getCookie(param);
     if (parameter === undefined || parameter === false || parameter === null) {
         return "";
     } else {
@@ -123,7 +123,7 @@ var joinParameters = function(url, baseParam, targetParam) {
         if (url.indexOf(newParam) === -1) {
             url = appendParam(url, target, targetVal);
             if (targetVal === "") {
-                setCookie(target, "default");
+                setCookie(target, "na");
             }
         } else {
             updateParam(url, target, targetVal);
@@ -161,13 +161,13 @@ var setCookie = function(cName, cValue, cExpires, cPath) {
 
 var updateCookie = function(cName, cValue) {
     var expireDate =
-        document.cookie.indexOf(cName) === -1 ?
-        new Date(
-            new Date().setTime(
-                new Date().getTime() + 30 * 24 * 3600 * 1000
-            )
-        ) :
-        unescape(document.cookie).split("expireDate=")[1];
+        document.cookie.indexOf(cName) === -1
+            ? new Date(
+                  new Date().setTime(
+                      new Date().getTime() + 30 * 24 * 3600 * 1000
+                  )
+              )
+            : unescape(document.cookie).split("expireDate=")[1];
     document.cookie =
         cName +
         "=" +
@@ -224,10 +224,16 @@ var cjAffLinks = function() {
     var links = document.querySelectorAll("a");
 };
 
+var defaultValues = function(params) {
+    for (var i = params.length - 1; i >= 0; i--) {
+        params[i];
+    }
+};
+
 var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
-var cjTracking = ['cjevent'];
-var purchaseURL = 'newtvorder.aspx';
+var cjTracking = ["cjevent"];
+var purchaseURL = "newtvorder.aspx";
 var tvURL = "teamviewer.com";
 
-updateURL(cjTracking, purchaseURL, ['PID', 'cjevent']);
+updateURL(cjTracking, purchaseURL, ["PID", "cjevent"]);
 updateURL(mlp, tvURL, ["pid", mlp]);

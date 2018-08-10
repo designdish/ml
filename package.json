@@ -5,7 +5,7 @@
   "main": "CartAbandonmentUnbounce-bak.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "babel": "babel app/src/es6/cart.abandonment.v0.1.03.js --watch --out-file app/dist/scripts/babel-compiled.js",
+    "babel": "babel app/src/es6/gtm.licenseCheck.var.js --watch --out-file app/dist/scripts/gtm.licenseCheck.var.js",
     "style": "node-sass-chokidar --include-path ./node_modules/ app/src/sass -o app/dist/styles --watch",
     "dev": "npm-run-all babel style"
   },
