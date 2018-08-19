@@ -320,6 +320,9 @@ if (getCookie("lae_vid") != null) {
 var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
 var tvURL = "teamviewer.com";
 	
-waitFor(window.liveagentExt).then(function(){
+// waitFor(window.liveagentExt).then(function(){
+// 	initLinks(mlp, tvURL, ["pid", mlp]);
+// });
+
+	
 	initLinks(mlp, tvURL, ["pid", mlp]);
-});
