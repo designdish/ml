@@ -210,7 +210,7 @@ var updateURLs = function(params, str, joinParams) {
         var linkURL = link.href;
 
         if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1 && linkURL.indexOf("#") === -1) {
-            link.href = checkParams(currentPage, params);
+            // link.href = checkParams(currentPage, params);
 
             if (joinParams != undefined) {
                 link.href = joinParameters(
