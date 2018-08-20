@@ -298,17 +298,24 @@ var syncCookies = function(cName) {
 };
 
 var appendParamValues = function(baseParam, params) {
-    var newParamVal;
+    var currentParamVal = getParameterByName(baseParam);
+    var newParamVal = "";
+
     for (var i = 0; i < params.length; i++) {
-        parameter = params[i];
+        var parameter = params[i];
         syncCookies(parameter);
-        newParamVal += parameter + '-' + getValue(parameter);
+        var pVal = getValue(parameter);
+
+        if (params.indexOf(parameter) < params.length) {
+            newParamVal += parameter + '-' + pVal + '-';
+        } else {
+            newParamVal += parameter + '-' + pVal;
+        }
     }
 
-    newParam = baseParam + '-' + newParamVal;
-    setCookie(baseParam, newParamVal);
-    return newParam;
+    return newParamVal;
 };
+
 
 
 waitFor(window.liveagentExt).then(function() {
@@ -321,9 +328,19 @@ waitFor(window.liveagentExt).then(function() {
     var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
     var tvURL = "teamviewer.com";
     var currentDomain = window.location.hostname;
+
+    var newPID = appendParamValues('pid', mlp);
+
+    if (getCookie('pid') != newPID) {
+        var pidCookie = getCookie('pid');
+        newPID = updateJoinedParameters(pidCookie, 'pid', newPid);
+        setCookie('pid', newPID);
+    } else {
+        setCookie('pid', newPID);
+    }
+
     if (currentDomain.indexOf(tvURL) != -1) {
-        //         updateURLs(mlp, tvURL, ["pid", mlp]);
-        appendParamValues(["pid", mlp]);
+        syncCookies(mlp);
 
     } else {
         initLinks(mlp, tvURL, ["pid", mlp]);
