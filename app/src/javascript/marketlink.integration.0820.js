@@ -42,8 +42,6 @@ var logCookie = function(cName, cValue) {
 
 var updateParam = function(url, param, paramVal) {
     var newURL, tempArray, baseURL, additionalURL, temp;
-
-    newURL = "";
     tempArray = url.split("?");
     baseURL = tempArray[0];
     additionalURL = tempArray[1];
@@ -303,7 +301,7 @@ waitFor(window.liveagentExt).then(function() {
     var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
     var tvURL = "teamviewer.com";
     var currentDomain = window.location.hostname;
-    if (currentDomain === tvURL) {
+    if (currentDomain.indexOf(tvURL) != -1) {
         updateURLs(mlp, tvURL, ["pid", mlp]);
     } else {
         initLinks(mlp, tvURL, ["pid", mlp]);
