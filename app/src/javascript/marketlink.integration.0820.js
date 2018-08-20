@@ -290,6 +290,26 @@ var updateLink = function(params, str, joinParams, event) {
 
 };
 
+var syncCookies = function(cName) {
+    var absValue = getValue(cName);
+    if (absValue != getCookie(cName)) {
+        setCookie(absValue);
+    }
+};
+
+var appendParamValues = function(baseParam, params) {
+    var newParamVal;
+    for (var i = 0; i < params.length; i++) {
+        parameter = params[i];
+        syncCookies(parameter);
+        newParamVal += parameter + '-' + getValue(parameter);
+    }
+
+    newParam = baseParam + '-' + newParamVal;
+    setCookie(baseParam, newParamVal);
+    return newParam;
+};
+
 
 waitFor(window.liveagentExt).then(function() {
 
@@ -302,7 +322,9 @@ waitFor(window.liveagentExt).then(function() {
     var tvURL = "teamviewer.com";
     var currentDomain = window.location.hostname;
     if (currentDomain.indexOf(tvURL) != -1) {
-        updateURLs(mlp, tvURL, ["pid", mlp]);
+        //         updateURLs(mlp, tvURL, ["pid", mlp]);
+        appendParamValues(["pid", mlp]);
+
     } else {
         initLinks(mlp, tvURL, ["pid", mlp]);
     }
