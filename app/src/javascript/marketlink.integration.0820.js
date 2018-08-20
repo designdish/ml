@@ -299,7 +299,7 @@ var syncCookies = function(cName) {
 
 var appendParamValues = function(baseParam, params) {
     var currentParamVal = getParameterByName(baseParam);
-    var newParamVal = "";
+    var newParamVal;
 
     for (var i = 0; i < params.length; i++) {
         var parameter = params[i];
@@ -312,7 +312,7 @@ var appendParamValues = function(baseParam, params) {
             newParamVal += parameter + '-' + pVal;
         }
     }
-
+    newParamVal = '-' + newParamVal;
     return newParamVal;
 };
 
