@@ -23,29 +23,11 @@ var checkParams = function(url, arr) {
 
 		if (paramVal === null) {
 			paramVal = getCookie(param);
-			// 	            if (paramVal === false) {
-			// 	                // if no parameter is present in the url, set the cookie and the parameter value to default
-			// 					//setCookie(param, "");
-			// 	                paramVal = getCookie(param);
-			// 	                logCookie(param, getCookie(param));
-			// 	            }
-			//append the newly created parameter to the url
 			url = appendParam(url, param, paramVal);
-			// setCookie(param, paramVal);
-			// logCookie(param, getCookie(param));
 		} else {
-			// if a parameter value is present in the url, reset the cookie to reflect the parameter value
-
 			setCookie(param, paramVal);
 			url = updateParam(url, param, paramVal);
-			// logCookie(param, getCookie(param));
 		}
-		// setTimeout(function() {
-		// 	if (paramVal != getCookie(param)) {
-		// 		eraseCookie(param);
-		// 		setCookie(param, paramVal);
-		// 	}
-		// }, 1500);
 	}
 	return url;
 };
@@ -70,7 +52,6 @@ var updateParam = function(url, param, paramVal) {
 	if (additionalURL) {
 		tempArray = additionalURL.split("&");
 		for (var i = 0; i < tempArray.length; i++) {
-			// setCookie(param, paramVal);
 			if (tempArray[i].split("=")[0] != param) {
 				newURL += temp + tempArray[i];
 				temp = "&";
@@ -103,7 +84,6 @@ var updateJoinedParameters = function(joinValue, param, paramVal) {
 };
 
 var appendParam = function(url, param, paramVal) {
-	// check for the presence of a query initiator and inject one into the url if it isn't, otherwise chain the parameters with the connector
 	var newLink =
 		url.indexOf("?") != -1
 			? url + "&" + param + "=" + paramVal
@@ -130,7 +110,6 @@ var joinParameters = function(url, baseParam, targetParam) {
 	newParamVal = baseParamVal;
 
 	for (var i = targetParam.length - 1; i >= 0; i--) {
-		//for each parameter in our target parameter array, check for a parameter or a cookie
 		var target = targetParam[i];
 		var targetVal = getValue(targetParam[i]);
 		var newParam = target + "=" + targetVal;
@@ -168,7 +147,6 @@ var joinParameters = function(url, baseParam, targetParam) {
 var today = new Date();
 var setCookie = function(cName, cValue, cExpires, cPath) {
 	if (!cPath) {
-		//sets cookies to default to all subdomains
 		var domain =
 			"/;domain=" + window.location.hostname.match(/[^\.]*\.[^.]*$/)[0];
 		cPath = domain;
@@ -232,9 +210,8 @@ var updateURL = function(params, str, joinParams) {
 	for (var i = 0; links.length > i; i++) {
 		var link = links[i];
 		var linkURL = link.href;
-		// for (var k = str.length - 1; k >= 0; k--) {
 
-		if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1) {
+		if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1 && linkURL.indexOf("#") === -1) {
 			link.href = checkParams(currentPage, params);
 
 			if (joinParams != undefined) {
@@ -255,74 +232,68 @@ var initLinks = function(params, str, joinParams) {
 		addEvent(links[i], "click", function(event) {
 			event.preventDefault();
 			updateLink(params, str, joinParams, event);
+		}
+
+		if (window.location.href.indexOf("teamviewer.com") != -1){
+			updateUrl(params, str, joinParams);
 		});
 	}
 };
 
-var getClosest = function(el, selector){
-
-
-	// Element.matches() polyfill
+var getClosest = function(el, selector) {
 	if (!Element.prototype.matches) {
-	    Element.prototype.matches =
-	        Element.prototype.matchesSelector ||
-	        Element.prototype.mozMatchesSelector ||
-	        Element.prototype.msMatchesSelector ||
-	        Element.prototype.oMatchesSelector ||
-	        Element.prototype.webkitMatchesSelector ||
-	        function(s) {
-	            var matches = (this.document || this.ownerDocument).querySelectorAll(s),
-	                i = matches.length;
-	            while (--i >= 0 && matches.item(i) !== this) {}
-	            return i > -1;
-	        };
+		Element.prototype.matches =
+			Element.prototype.matchesSelector ||
+			Element.prototype.mozMatchesSelector ||
+			Element.prototype.msMatchesSelector ||
+			Element.prototype.oMatchesSelector ||
+			Element.prototype.webkitMatchesSelector ||
+			function(s) {
+				var matches = (
+						this.document || this.ownerDocument
+					).querySelectorAll(s),
+					i = matches.length;
+				while (--i >= 0 && matches.item(i) !== this) {}
+				return i > -1;
+			};
 	}
 
-
-	for(; el && el !== 'document'; el = el.parentNode){
-		if (el.matches(selector)){
+	for (; el && el !== "document"; el = el.parentNode) {
+		if (el.matches(selector)) {
 			return el;
 		}
 	}
 	return null;
-}
-
-var updateLink = function(params, str, joinParams, event) {
-		var link = event.target;
-		link = getClosest(link, 'a');
-		linkURL = link.href;
-		
-		var currentPage = window.location.href;
-
-		if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1) {
-			link.href = checkParams(currentPage, params);
-
-			if (joinParams != undefined) {
-				link.href = joinParameters(
-					linkURL,
-					joinParams[0],
-					joinParams[1]
-				);
-			}
-			console.log(link.href);
-			window.location = link.href;
-		}
-        else{
-                window.location = link.href;
-            }
 };
 
-if (getCookie("lae_vid") != null) {
+var updateLink = function(params, str, joinParams, event) {
+	var link = event.target;
+	link = getClosest(link, "a");
+	linkURL = link.href;
+
+	var currentPage = window.location.href;
+
+	if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1) {
+		link.href = checkParams(currentPage, params);
+
+		if (joinParams != undefined) {
+			link.href = joinParameters(linkURL, joinParams[0], joinParams[1]);
+		}
+		console.log(link.href);
+		window.location = link.href;
+	} else {
+		window.location = link.href;
+	}
+};
+
+if (getCookie("lae_vid") != false) {
 	old_lae_vid = getCookie("lae_vid");
 	setCookie("Old_lae_vid", old_lae_vid);
 }
 
 var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
 var tvURL = "teamviewer.com";
-	
-// waitFor(window.liveagentExt).then(function(){
-// 	initLinks(mlp, tvURL, ["pid", mlp]);
-// });
 
-	
+waitFor(window.liveagentExt).then(function() {
 	initLinks(mlp, tvURL, ["pid", mlp]);
+});
