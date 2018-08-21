@@ -426,11 +426,12 @@ try {
         }
 
         console.dir(link.href);
+        window.location = link.href;
         // if (confirm("open url @ " + link.href + "   ?")) {
         //     window.location = link.href;
         // } else {
         // }
-                window.location = link.href;
+        //         window.location = link.href;
     };
 
     var syncCookies = function(cName) {
@@ -487,7 +488,7 @@ try {
     return defaults;
     };
 
-    waitFor(window.liveagentExt).then(function() {[
+    waitFor(window.liveagentExt).then(function() {
             cCount = 0;
     
             if (getCookie("lae_vid") != false) {
@@ -534,6 +535,6 @@ try {
                 syncCookies(mlp);
             } else {
                 initLinks(mlp, tvURL, ["pid", mlp]);
-            }]
+            }
     });
 } catch (e) {}
