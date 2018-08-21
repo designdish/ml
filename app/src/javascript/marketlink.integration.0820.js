@@ -1,5 +1,6 @@
 try {
-    var cCount;
+    var cCount = 0;
+
     var getParameterByName = function(name, url) {
         if (!url) url = window.location.href;
         console.dir(
@@ -503,7 +504,6 @@ try {
     };
 
     waitFor(window.liveagentExt).then(function() {
-            cCount = 0;
               
     
             if (getCookie("ml_eg") === false){
