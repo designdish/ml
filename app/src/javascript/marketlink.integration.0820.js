@@ -1,6 +1,6 @@
 try {
-    
 
+    var cCount;
     var getParameterByName = function(name, url) {
         if (!url) url = window.location.href;
         console.dir('getting value for ' +  name + ' (using getParameterByName)');
@@ -69,7 +69,7 @@ try {
 
     var updateJoinedParameters = function(joinValue, param, paramVal) {
         newParam = "";
-        tempArray = joinValue.replace(" ", "").split("-");
+        tempArray = joinValue.split("-");
         baseParam = tempArray[0];
         additionalParam = tempArray[1];
         temp = "";
@@ -344,7 +344,7 @@ try {
 
 
     waitFor(window.liveagentExt).then(function() {
-            var cCount = 0;
+        cCount = 0;
 
         if (getCookie("lae_vid") != false) {
             old_lae_vid = getCookie("lae_vid");
