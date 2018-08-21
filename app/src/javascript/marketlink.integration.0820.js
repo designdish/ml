@@ -1,9 +1,11 @@
 try {
-
     var cCount;
     var getParameterByName = function(name, url) {
         if (!url) url = window.location.href;
-        console.dir('getting value for ' +  name + ' (using getParameterByName)', 'color: #bada55');
+        console.dir(
+            "getting value for " + name + " (using getParameterByName)",
+            "color: #bada55"
+        );
         name = name.replace(/[\[\]]/g, "\\$&");
         var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
             results = regex.exec(url);
@@ -20,6 +22,50 @@ try {
         }
     };
 
+    var isEqual = function(value, other) {
+        var type = Object.prototype.toString.call(value);
+        if (type !== Object.prototype.toString.call(other)) return false;
+        if (["[object Array]", "[object Object]"].indexOf(type) < 0)
+            return false;
+        var valueLen =
+            type === "[object Array]"
+                ? value.length
+                : Object.keys(value).length;
+        var otherLen =
+            type === "[object Array]"
+                ? other.length
+                : Object.keys(other).length;
+        if (valueLen !== otherLen) return false;
+
+        var compare = function(item1, item2) {
+            var itemType = Object.prototype.toString.call(item1);
+            if (["[object Array]", "[object Object]"].indexOf(itemType) >= 0) {
+                if (!isEqual(item1, item2)) return false;
+            } else {
+                if (itemType !== Object.prototype.toString.call(item2))
+                    return false;
+                if (itemType === "[object Function]") {
+                    if (item1.toString() !== item2.toString()) return false;
+                } else {
+                    if (item1 !== item2) return false;
+                }
+            }
+        };
+
+        if (type === "[object Array]") {
+            for (var i = 0; i < valueLen; i++) {
+                if (compare(value[i], other[i]) === false) return false;
+            }
+        } else {
+            for (var key in value) {
+                if (value.hasOwnProperty(key)) {
+                    if (compare(value[key], other[key]) === false) return false;
+                }
+            }
+        }
+        return true;
+    };
+
     var checkParams = function(url, arr) {
         for (var i = arr.length - 1; i >= 0; i--) {
             var param = arr[i];
@@ -28,7 +74,6 @@ try {
             if (paramVal === null) {
                 paramVal = getCookie(param);
                 url = appendParam(url, param, paramVal);
-
             } else {
                 setCookie(param, paramVal);
                 url = updateParam(url, param, paramVal);
@@ -49,7 +94,7 @@ try {
         var newURL, tempArray, baseURL, additionalURL, temp;
         tempArray = url.split("?");
         baseURL = tempArray[0];
-        additionalURL = (tempArray[1] === undefined) ? "" : tempArray[1];
+        additionalURL = tempArray[1] === undefined ? "" : tempArray[1];
         //         additionalURL = tempArray[1];
         temp = "";
 
@@ -57,7 +102,7 @@ try {
             tempArray = additionalURL.split("&");
             for (var i = 0; i < tempArray.length; i++) {
                 if (tempArray[i].split("=")[0] != param) {
-                    newURL = (newURL === undefined) ? "" : newURL;
+                    newURL = newURL === undefined ? "" : newURL;
                     newURL += temp + tempArray[i];
                     temp = "&";
                 }
@@ -65,6 +110,17 @@ try {
         }
         var paramText = temp + "" + param + "=" + paramVal;
         return baseURL + "?" + newURL + paramText;
+    };
+
+    var compareParams = function(param1, param2, delimiter) {
+        var arr1 = param1.split(delimiter).sort();
+        var arr2 = param2.split(delimiter).sort();
+        
+        if (isEqual(arr1.sort, param2)) {
+            return true;
+        } else {
+            console.log(arr1 + '\n' + arr2);
+        }
     };
 
     var updateJoinedParameters = function(joinValue, param, paramVal) {
@@ -86,15 +142,17 @@ try {
         }
 
         var paramText = temp + "" + param + "-" + paramVal;
-        console.dir("joined parameters " + baseParam + "-" +  newParam + "-" +  paramText)
+        console.dir(
+            "joined parameters " + baseParam + "-" + newParam + "-" + paramText
+        );
         return baseParam + "-" + newParam + paramText;
     };
 
     var appendParam = function(url, param, paramVal) {
         var newLink =
-            url.indexOf("?") != -1 ?
-            url + "&" + param + "=" + paramVal :
-            url + "?" + param + "=" + paramVal;
+            url.indexOf("?") != -1
+                ? url + "&" + param + "=" + paramVal
+                : url + "?" + param + "=" + paramVal;
         return newLink;
     };
 
@@ -103,10 +161,14 @@ try {
             url = window.location.href;
         }
         var parameter =
-            getParameterByName(param) != null ?
-            getParameterByName(param) :
-            getCookie(param);
-        if (parameter === undefined || parameter === false || parameter === null) {
+            getParameterByName(param) != null
+                ? getParameterByName(param)
+                : getCookie(param);
+        if (
+            parameter === undefined ||
+            parameter === false ||
+            parameter === null
+        ) {
             return "";
         } else {
             return parameter;
@@ -144,12 +206,23 @@ try {
                 updateParam(url, target, targetVal);
             }
             if (targetVal != "") {
-                console.dir("settingCookie for target: " + target + " the value (targetVal) is : " + targetVal, 'color: #bada55');
+                console.dir(
+                    "settingCookie for target: " +
+                        target +
+                        " the value (targetVal) is : " +
+                        targetVal,
+                    "color: #bada55"
+                );
                 setCookie(target, targetVal);
             }
         }
         setCookie(baseParam, newParamVal);
-        console.dir("settingCookie for baseParam (joinParameters)" + target + " the value (newParamVal) is : " + targetVal);
+        console.dir(
+            "settingCookie for baseParam (joinParameters)" +
+                target +
+                " the value (newParamVal) is : " +
+                targetVal
+        );
 
         result = updateParam(url, baseParam, newParamVal);
 
@@ -160,7 +233,8 @@ try {
     var setCookie = function(cName, cValue, cExpires, cPath) {
         if (!cPath) {
             var domain =
-                "/;domain=" + window.location.hostname.match(/[^\.]*\.[^.]*$/)[0];
+                "/;domain=" +
+                window.location.hostname.match(/[^\.]*\.[^.]*$/)[0];
             cPath = domain;
         }
         if (!cExpires) {
@@ -175,20 +249,26 @@ try {
             "; path=" +
             cPath;
 
-        cCount++;         
-        console.dir("the cookie value for " +  cName + " was the number " + cCount + " cookie manipulated since pageload");
+        cCount++;
+        console.dir(
+            "the cookie value for " +
+                cName +
+                " was the number " +
+                cCount +
+                " cookie manipulated since pageload"
+        );
         return cValue;
     };
 
     var updateCookie = function(cName, cValue) {
         var expireDate =
-            document.cookie.indexOf(cName) === -1 ?
-            new Date(
-                new Date().setTime(
-                    new Date().getTime() + 30 * 24 * 3600 * 1000
-                )
-            ) :
-            unescape(document.cookie).split("expireDate=")[1];
+            document.cookie.indexOf(cName) === -1
+                ? new Date(
+                      new Date().setTime(
+                          new Date().getTime() + 30 * 24 * 3600 * 1000
+                      )
+                  )
+                : unescape(document.cookie).split("expireDate=")[1];
         document.cookie =
             cName +
             "=" +
@@ -214,7 +294,7 @@ try {
 
         var cData = cStr.substring(startSlice, endSlice);
         var cValue = cData.substring(cData.indexOf("=") + 1, cData.length);
-        console.dir(cName + ' value is now ' + cValue, 'color: #bada55');
+        console.dir(cName + " value is now " + cValue, "color: #bada55");
         return cValue;
     };
 
@@ -226,7 +306,11 @@ try {
             var link = links[i];
             var linkURL = link.href;
 
-            if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1 && linkURL.indexOf("#") === -1) {
+            if (
+                linkURL.indexOf(str) != -1 &&
+                linkURL.indexOf("mailto") === -1 &&
+                linkURL.indexOf("#") === -1
+            ) {
                 // link.href = checkParams(currentPage, params);
 
                 if (joinParams != undefined) {
@@ -298,28 +382,32 @@ try {
             link.href = checkParams(currentPage, params);
 
             if (joinParams != undefined) {
-                link.href = joinParameters(linkURL, joinParams[0], joinParams[1]);
+                link.href = joinParameters(
+                    linkURL,
+                    joinParams[0],
+                    joinParams[1]
+                );
             }
         }
 
         console.dir(link.href);
-        if (confirm('open url @ ' + link.href + '   ?')){
+        if (confirm("open url @ " + link.href + "   ?")) {
             window.location = link.href;
-        }else{}
-//         window.location = link.href;
-
+        } else {
+        }
+        //         window.location = link.href;
     };
 
     var syncCookies = function(cName) {
-        if (typeof(cName) === "object"){
-            for (var i = 0; i < cName.length; i++){
+        if (typeof cName === "object") {
+            for (var i = 0; i < cName.length; i++) {
                 var absValue = getValue(cName[i]);
                 if (absValue != getCookie(cName[i])) {
                     setCookie(cName[i], absValue);
                 }
             }
-        }else{
-          var absValue = getValue(cName);
+        } else {
+            var absValue = getValue(cName);
             if (absValue != getCookie(cName)) {
                 setCookie(cName, absValue);
             }
@@ -335,20 +423,22 @@ try {
             var pVal = getValue(parameter);
 
             if (params.indexOf(parameter) < params.length) {
-                newParamVal += parameter + '-' + pVal + '-';
+                newParamVal += parameter + "-" + pVal + "-";
             } else {
-                newParamVal += parameter + '-' + pVal;
+                newParamVal += parameter + "-" + pVal;
             }
         }
 
-        if (currentParamVal != newParamVal){
-            newParamVal = updateJoinedParameters(currentParamVal, baseParam, newParamVal);
-        } 
+        if (currentParamVal != newParamVal) {
+            newParamVal = updateJoinedParameters(
+                currentParamVal,
+                baseParam,
+                newParamVal
+            );
+        }
 
         return newParamVal;
     };
-
-
 
     waitFor(window.liveagentExt).then(function() {
         cCount = 0;
@@ -363,21 +453,29 @@ try {
         var tvURL = "teamviewer.com";
         var currentDomain = window.location.hostname;
 
-        var newPID = appendParamValues('pid', mlp);
-        var pidCookie = getCookie('pid');
+        var newPID = appendParamValues("pid", mlp);
+        var pidCookie = getCookie("pid");
+
+        compareParams(pidCookie, newPID);
 
         if (pidCookie != newPID && pidCookie != false) {
-            console.dir("pid cookie is not correct, attempting to set latest pid value of :" + newPID, 'color: #bada55');
-//             newPID = updateJoinedParameters(pidCookie, 'pid', newPID);
-            setCookie('pid', newPID);
+            console.dir(
+                "pid cookie is not correct, attempting to set latest pid value of :" +
+                    newPID,
+                "color: #bada55"
+            );
+            //             newPID = updateJoinedParameters(pidCookie, 'pid', newPID);
+            setCookie("pid", newPID);
         } else {
-            console.dir("settingCookie for pid the value is : " + newPID, 'color: #bada55');
-            setCookie('pid', newPID);
+            console.dir(
+                "settingCookie for pid the value is : " + newPID,
+                "color: #bada55"
+            );
+            setCookie("pid", newPID);
         }
 
         if (currentDomain.indexOf(tvURL) != -1) {
             syncCookies(mlp);
-
         } else {
             initLinks(mlp, tvURL, ["pid", mlp]);
         }
