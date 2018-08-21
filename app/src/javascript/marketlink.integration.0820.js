@@ -482,7 +482,8 @@ try {
 
     var setDefaults = function(cName, cVal){
         var defaults; 
-        if (getCookie(cName) = false){
+        if (
+            getCookie(cName) = false){
             defaults = setCookie(cName, cVal);
         }
     return defaults;
