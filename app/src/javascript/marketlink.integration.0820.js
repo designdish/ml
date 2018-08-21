@@ -90,6 +90,8 @@ try {
         console.log("cookie name: " + cName + " | cookie value: " + cValue);
     };
 
+
+
     var updateParam = function(url, param, paramVal) {
         var newURL, tempArray, baseURL, additionalURL, temp;
         tempArray = url.split("?");
@@ -127,11 +129,23 @@ try {
         return  pArray;
     }
 
+    Array.prototype.unique = function(){
+        var a = this.concat();
+        for (var i = 0; i < a.length; i++){
+            for(var j=i+1; j<a.length; j++){
+                if(a[i] === a[j])
+                a.splice(j--, 1);
+            }
+        }
+        return a;
+    };
+
     var compareParams = function(param1, param2, delimiter) {
         var arr1 = splitArray(param1, delimiter);
         var arr2 = splitArray(param2, delimiter);
+
        
-       let arr3 = arr1.merge(arr2);
+       let arr3 = arr1.concat(arr2).unique();
        console.dir("merged pid is: " + arr3);
 
        if (isEqual(arr1, arr2)) {
