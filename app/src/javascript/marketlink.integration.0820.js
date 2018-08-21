@@ -495,7 +495,7 @@ if(currentDomain.indexOf(tvUSURL) != -1){
         setCookie("ml_eg", "DIRECT");
     }
     if (currentDomain.indexOf(tvURL) != -1) {
-            if (getParameterByName(lae_vid)!=undefined){ 
+            if (getParameterByName(lae_vid)!=null){ 
                syncCookies(mlp);
         }
     };
@@ -504,7 +504,7 @@ if(currentDomain.indexOf(tvUSURL) != -1){
 
 
 if (currentDomain.indexOf(tvURL) != -1){
-     if (getParameterByName(lae_vid)!= undefined){ 
+     if (getParameterByName(lae_vid)!= null){ 
                syncCookies(mlp);
         }
  waitFor(window.liveagentExt).then(function() {
