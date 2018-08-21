@@ -477,15 +477,6 @@ try{
         return newParamVal;
     };
 
-    var setDefaults = function(cName, cVal){
-        var defaults; 
-        if (
-            getCookie(cName) = false){
-            defaults = setCookie(cName, cVal);
-        }
-    return defaults;
-    };
-
 if(currentDomain.indexOf(tvUSURL) != -1){
     initLinks(mlp, tvURL, ["pid", mlp]);
        
