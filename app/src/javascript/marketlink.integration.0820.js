@@ -112,22 +112,41 @@ try {
         return baseURL + "?" + newURL + paramText;
     };
 
+//     var splitArray = function(str, delimiter){
+//           result = {};
+//             str.split(delimiter).forEach(function(x){
+//                 var arr =  x.split('~');
+//                 arr[1] && (result[arr[0]] = arr[1]);
+//                 var result = Object.keys(result).map(function(key){
+//                 return[result[key], result[value]];
+//              }); 
+//             });
+//             return result;
+//     }
+
+
     var splitArray = function(str, delimiter){
           result = {};
+          var pArray = new Map();
+
             str.split(delimiter).forEach(function(x){
                 var arr =  x.split('~');
-                arr[1] && (result[arr[0]] = arr[1]);
-            });
-            return result;
+               arr[1] && (result[arr[0]] = arr[1]);
+          });
+
+          Object.keys(result).forEach(function(key, index){
+              pArray.values(result);
+          })
+              
+        return  pArray;
     }
 
     var compareParams = function(param1, param2, delimiter) {
         var arr1 = splitArray(param1, delimiter);
         var arr2 = splitArray(param2, delimiter);
-
-        arr1.sort();
-        arr1.sort();
-            
+        let keys1 = Array.from(arr1.keys());
+        let keys2 = Array.from(arr2.keys());
+        
         if (isEqual(arr1, arr2)) {
             console.log('parameters are equal');
             return true;
@@ -140,7 +159,7 @@ try {
     var updateJoinedParameters = function(joinValue, param, paramVal) {
         var newParam, tempArray, baseParam, additionalParam, temp;
         newParam = "";
-        tempArray = joinValue.split("-");
+        tempArray = joinValue.replace(" ", "").split("-");
         baseParam = tempArray[0];
         additionalParam = tempArray[1];
         temp = "-";
@@ -437,9 +456,9 @@ try {
             var pVal = getValue(parameter);
 
             if (params.indexOf(parameter) < params.length) {
-                newParamVal += parameter + "-" + pVal + "-";
+                newParamVal += parameter + "~" + pVal + "-";
             } else {
-                newParamVal += parameter + "-" + pVal;
+                newParamVal += parameter + "~" + pVal;
             }
         }
 
