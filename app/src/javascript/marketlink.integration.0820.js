@@ -1,6 +1,9 @@
 try {
+    
+
     var getParameterByName = function(name, url) {
         if (!url) url = window.location.href;
+        console.dir('getting value for ' +  name + ' (using getParameterByName)');
         name = name.replace(/[\[\]]/g, "\\$&");
         var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
             results = regex.exec(url);
@@ -139,10 +142,12 @@ try {
                 updateParam(url, target, targetVal);
             }
             if (targetVal != "") {
+                console.dir("settingCookie for target: " + target + " the value (targetVal) is : " + targetVal);
                 setCookie(target, targetVal);
             }
         }
         setCookie(baseParam, newParamVal);
+        console.dir("settingCookie for baseParam (joinParameters)" + target + " the value (newParamVal) is : " + targetVal);
 
         result = updateParam(url, baseParam, newParamVal);
 
@@ -168,6 +173,8 @@ try {
             "; path=" +
             cPath;
 
+        cCount++;         
+        console.dir("the cookie value for " +  cName + " was the number " + cCount + " cookie manipulated since pageload");
         return cValue;
     };
 
@@ -301,9 +308,18 @@ try {
     };
 
     var syncCookies = function(cName) {
-        var absValue = getValue(cName);
-        if (absValue != getCookie(cName)) {
-            setCookie(absValue);
+        if (typeof(cName) === "object"){
+            for (var i = 0; i < cName.length; i++){
+                var absValue = getValue(cName[i]);
+                if (absValue != getCookie(cName[i])) {
+                    setCookie(cName[i], absValue);
+                }
+            }
+        }else{
+          var absValue = getValue(cName);
+            if (absValue != getCookie(cName)) {
+                setCookie(cName, absValue);
+            }
         }
     };
 
@@ -328,6 +344,8 @@ try {
 
 
     waitFor(window.liveagentExt).then(function() {
+            var cCount = 0;
+
         if (getCookie("lae_vid") != false) {
             old_lae_vid = getCookie("lae_vid");
             setCookie("Old_lae_vid", old_lae_vid);
@@ -338,16 +356,16 @@ try {
         var currentDomain = window.location.hostname;
 
         var newPID = appendParamValues('pid', mlp);
+        var pidCookie = getCookie('pid');
 
-        if (getCookie('pid') != newPID && getCookie('pid') != false) {
-            var pidCookie = getCookie('pid');
-            if (getParameterByName('pid') != undefined) {
-                appendParam('pid', newPID);
-            }
+        if (pidCookie != newPID && pidCookie != false) {
+            console.dir("pid cookie is not correct, attempting to set latest pid value of :" + newPID);
             newPID = updateJoinedParameters(pidCookie, 'pid', newPID);
+            console.dir("settingCookie for pid the value is : " + newPID);
+
             setCookie('pid', newPID);
         } else {
-            appendParam(pid, newPID);
+            console.dir("settingCookie for pid the value is : " + newPID);
             setCookie('pid', newPID);
         }
 
