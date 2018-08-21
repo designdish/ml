@@ -3,7 +3,7 @@ try {
     var cCount;
     var getParameterByName = function(name, url) {
         if (!url) url = window.location.href;
-        console.dir('getting value for ' +  name + ' (using getParameterByName)');
+        console.dir('getting value for ' +  name + ' (using getParameterByName)', 'color: #bada55');
         name = name.replace(/[\[\]]/g, "\\$&");
         var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
             results = regex.exec(url);
@@ -68,6 +68,7 @@ try {
     };
 
     var updateJoinedParameters = function(joinValue, param, paramVal) {
+        var newParam, tempArray, baseParam, additionalParam, temp;
         newParam = "";
         tempArray = joinValue.split("-");
         baseParam = tempArray[0];
@@ -85,6 +86,7 @@ try {
         }
 
         var paramText = temp + "" + param + "-" + paramVal;
+        console.dir("joined parameters " + baseParam + "-" +  newParam + "-" +  paramText)
         return baseParam + "-" + newParam + paramText;
     };
 
@@ -142,7 +144,7 @@ try {
                 updateParam(url, target, targetVal);
             }
             if (targetVal != "") {
-                console.dir("settingCookie for target: " + target + " the value (targetVal) is : " + targetVal);
+                console.dir("settingCookie for target: " + target + " the value (targetVal) is : " + targetVal, 'color: #bada55');
                 setCookie(target, targetVal);
             }
         }
@@ -212,6 +214,7 @@ try {
 
         var cData = cStr.substring(startSlice, endSlice);
         var cValue = cData.substring(cData.indexOf("=") + 1, cData.length);
+        console.dir(cName + ' value is now ' + cValue, 'color: #bada55');
         return cValue;
     };
 
@@ -329,7 +332,6 @@ try {
 
         for (var i = 0; i < params.length; i++) {
             var parameter = params[i];
-            syncCookies(parameter);
             var pVal = getValue(parameter);
 
             if (params.indexOf(parameter) < params.length) {
@@ -338,6 +340,11 @@ try {
                 newParamVal += parameter + '-' + pVal;
             }
         }
+
+        if (currentParamVal != newParamVal){
+            newParamVal = updateJoinedParameters(currentParamVal, baseParam, newParamVal);
+        } 
+
         return newParamVal;
     };
 
@@ -352,6 +359,7 @@ try {
         }
 
         var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
+        syncCookies(mlp);
         var tvURL = "teamviewer.com";
         var currentDomain = window.location.hostname;
 
@@ -359,13 +367,11 @@ try {
         var pidCookie = getCookie('pid');
 
         if (pidCookie != newPID && pidCookie != false) {
-            console.dir("pid cookie is not correct, attempting to set latest pid value of :" + newPID);
-            newPID = updateJoinedParameters(pidCookie, 'pid', newPID);
-            console.dir("settingCookie for pid the value is : " + newPID);
-
+            console.dir("pid cookie is not correct, attempting to set latest pid value of :" + newPID, 'color: #bada55');
+//             newPID = updateJoinedParameters(pidCookie, 'pid', newPID);
             setCookie('pid', newPID);
         } else {
-            console.dir("settingCookie for pid the value is : " + newPID);
+            console.dir("settingCookie for pid the value is : " + newPID, 'color: #bada55');
             setCookie('pid', newPID);
         }
 
