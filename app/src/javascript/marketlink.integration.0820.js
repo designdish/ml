@@ -115,7 +115,7 @@ try {
     var splitArray = function(str, delimiter){
           result = {};
             str.split(delimiter).forEach(function(x){
-                var arr =  x.split(delimiter);
+                var arr =  x.split('~');
                 arr[1] && (result[arr[0]] = arr[1]);
             });
             return result;
@@ -124,9 +124,14 @@ try {
     var compareParams = function(param1, param2, delimiter) {
         var arr1 = splitArray(param1, delimiter);
         var arr2 = splitArray(param2, delimiter);
+
+        arr1.sort();
+        arr1.sort();
             
         if (isEqual(arr1, arr2)) {
+            console.log('parameters are equal');
             return true;
+
         } else {
             console.log(arr1 + '\n' + arr2);
         }
@@ -138,19 +143,19 @@ try {
         tempArray = joinValue.split("-");
         baseParam = tempArray[0];
         additionalParam = tempArray[1];
-        temp = "";
+        temp = "-";
 
         if (additionalParam) {
             tempArray = additionalParam.split("-");
             for (var i = 0; i < tempArray.length; i++) {
-                if (tempArray[i].split("-")[0] != param) {
+                if (tempArray[i].split("~")[0] != param) {
                     newParam += temp + tempArray[i];
                     temp = "-";
                 }
             }
         }
 
-        var paramText = temp + "" + param + "-" + paramVal;
+        var paramText = temp + "" + param + "~" + paramVal;
         console.dir(
             "joined parameters " + baseParam + "-" + newParam + "-" + paramText
         );
