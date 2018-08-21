@@ -456,7 +456,7 @@ try {
         var newPID = appendParamValues("pid", mlp);
         var pidCookie = getCookie("pid");
 
-        compareParams(pidCookie, newPID);
+        compareParams(pidCookie, newPID, '-');
 
         if (pidCookie != newPID && pidCookie != false) {
             console.dir(
