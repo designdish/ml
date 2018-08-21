@@ -537,7 +537,7 @@ try {
                 setCookie("pid", newPID);
             }
     
-         else {
+         if (currentDomain.indexOf("teamviewer.us") != -1){
                 initLinks(mlp, tvURL, ["pid", mlp]);
             }
     });
