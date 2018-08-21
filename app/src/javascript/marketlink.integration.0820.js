@@ -112,11 +112,20 @@ try {
         return baseURL + "?" + newURL + paramText;
     };
 
+    var splitArray = function(str){
+          result = {};
+            str.split(delimiter).forEach(function(x){
+                var arr =  x.split(delimiter);
+                arr[1] && (result[arr[0]] = arr[1]);
+            });
+            return result;
+    }
+
     var compareParams = function(param1, param2, delimiter) {
-        var arr1 = param1.split(delimiter).sort();
-        var arr2 = param2.split(delimiter).sort();
-        
-        if (isEqual(arr1.sort, param2)) {
+        var arr1 = splitArray(param1);
+        var arr2 = splitArray(param2);
+            
+        if (isEqual(arr1, arr2)) {
             return true;
         } else {
             console.log(arr1 + '\n' + arr2);
@@ -429,7 +438,7 @@ try {
             }
         }
 
-        if (currentParamVal != newParamVal) {
+        if (currentParamVal != newParamVal && currentParamVal != null) {
             newParamVal = updateJoinedParameters(
                 currentParamVal,
                 baseParam,
@@ -455,9 +464,10 @@ try {
 
         var newPID = appendParamValues("pid", mlp);
         var pidCookie = getCookie("pid");
-
-        compareParams(pidCookie, newPID, '-');
-
+        if(pidCookie != false && newPID != null){
+            compareParams(pidCookie, newPID, '-')
+        };
+        
         if (pidCookie != newPID && pidCookie != false) {
             console.dir(
                 "pid cookie is not correct, attempting to set latest pid value of :" +
