@@ -491,27 +491,7 @@ try {
   
 
 
-    console.log(getCookie('pid'));
 
-       if (getCookie("lae_vid") != false) {
-            old_lae_vid = getCookie("lae_vid");
-            setCookie("Old_lae_vid", old_lae_vid);
-        };
-
-        var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
-
-       if (getCookie("pid") === false){
-            setCookie("pid", "PIDEFAULT");
-        }
-
-        if (getCookie("ml_eg") === false){
-            setCookie("ml_eg", "DIRECT");
-        }
-        if (currentDomain.indexOf(tvURL) != -1) {
-                if (getParameterByName(lae_vid)!=undefined){ 
-                   syncCookies(mlp);
-            }
-        };
 
     waitFor(window.liveagentExt).then(function() {
      
@@ -533,3 +513,37 @@ try {
     });
     });
 } catch (e) {}
+
+
+window.onload = function(){
+    if (window.location.href.indexOf('teamviewer.us') != -1){
+            initLinks(mlp, tvURL, ["pid", mlp]);
+        }
+    else if (currentDomain.indexOf(tvURL) != -1) {
+            if (getParameterByName(lae_vid)!= undefined){ 
+               syncCookies(mlp);
+        }
+    };
+    
+    console.log(getCookie('pid'));
+
+   if (getCookie("lae_vid") != false) {
+        old_lae_vid = getCookie("lae_vid");
+        setCookie("Old_lae_vid", old_lae_vid);
+    };
+
+    var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
+
+   if (getCookie("pid") === false){
+        setCookie("pid", "PIDEFAULT");
+    }
+
+    if (getCookie("ml_eg") === false){
+        setCookie("ml_eg", "DIRECT");
+    }
+    if (currentDomain.indexOf(tvURL) != -1) {
+            if (getParameterByName(lae_vid)!=undefined){ 
+               syncCookies(mlp);
+        }
+    };
+}
