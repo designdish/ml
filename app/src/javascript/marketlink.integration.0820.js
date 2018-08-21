@@ -126,7 +126,7 @@ try {
               return {param: key, val : result[key]};
           });
               
-        return  pArray;
+        return  pArray.sort();
     }
 
     Array.prototype.unique = function(){
@@ -145,7 +145,7 @@ try {
         var arr2 = splitArray(param2, delimiter);
 
        
-       let arr3 = arr1.concat(arr2).unique();
+       var arr3 = arr1.concat(arr2).unique();
        console.dir("merged pid is: " + arr3);
 
        if (isEqual(arr1, arr2)) {
@@ -456,8 +456,12 @@ try {
         for (var i = 0; i < params.length; i++) {
             var parameter = params[i];
             var pVal = getValue(parameter);
-
-            if (params.indexOf(parameter) < params.length) {
+            
+            if (params.indexOf(parameter) === 0) {
+                newParamVal = "";
+                newParamVal += parameter + "~" + pVal + "-";
+            }
+            else if (params.indexOf(parameter) < params.length) {
                 newParamVal += parameter + "~" + pVal + "-";
             } else {
                 newParamVal += parameter + "~" + pVal;
