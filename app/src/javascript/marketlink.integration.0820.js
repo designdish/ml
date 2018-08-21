@@ -131,8 +131,8 @@ try {
         var arr1 = splitArray(param1, delimiter);
         var arr2 = splitArray(param2, delimiter);
        
-       let arr3 = new Map(function*(){yield* arr1; yield* arr2;}());
-       console.dir(arr3);
+       let arr3 = arr1.merge(arr2);
+       console.dir("merged pid is: " + arr3);
 
        if (isEqual(arr1, arr2)) {
             console.log('parameters are equal');
@@ -462,9 +462,11 @@ try {
     };
 
     var setDefaults = function(cName, cVal){
+        var defaults; 
         if (getCookie(cName) = false){
-            setCookie(cName, cVal);
+            defaults = setCookie(cName, cVal);
         }
+    return defaults;
     };
 
     waitFor(window.liveagentExt).then(function() {
@@ -475,9 +477,13 @@ try {
             setCookie("Old_lae_vid", old_lae_vid);
         }
 
-        setDefaults('ml_eg', "DIRECT");
-        setDefaults('pid', "_pid_");
-
+        if (getCookie("ml_eg") === false){
+            setCookie("ml_eg", "DIRECT");
+        }
+        if (getCookie("pid") === false){
+            setCookie("pid", "DIRECT");
+        }
+      
         var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
         syncCookies(mlp);
 
