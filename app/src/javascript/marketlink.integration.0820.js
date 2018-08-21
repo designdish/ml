@@ -112,31 +112,17 @@ try {
         return baseURL + "?" + newURL + paramText;
     };
 
-//     var splitArray = function(str, delimiter){
-//           result = {};
-//             str.split(delimiter).forEach(function(x){
-//                 var arr =  x.split('~');
-//                 arr[1] && (result[arr[0]] = arr[1]);
-//                 var result = Object.keys(result).map(function(key){
-//                 return[result[key], result[value]];
-//              }); 
-//             });
-//             return result;
-//     }
-
-
     var splitArray = function(str, delimiter){
           result = {};
-          var pArray = new Map();
-
-            str.split(delimiter).forEach(function(x){
+          
+          str.split(delimiter).forEach(function(x){
                 var arr =  x.split('~');
                arr[1] && (result[arr[0]] = arr[1]);
           });
 
-          Object.keys(result).forEach(function(key, index){
-              pArray.values(result);
-          })
+          var pArray = Object.keys(result).map(function(key){
+              return {param: key, val : result[key]};
+          });
               
         return  pArray;
     }
@@ -144,14 +130,16 @@ try {
     var compareParams = function(param1, param2, delimiter) {
         var arr1 = splitArray(param1, delimiter);
         var arr2 = splitArray(param2, delimiter);
-        let keys1 = Array.from(arr1.keys());
-        let keys2 = Array.from(arr2.keys());
-        
-        if (isEqual(arr1, arr2)) {
+       
+       let arr3 = new Map(function*(){yield* arr1; yield* arr2;}());
+       console.dir(arr3);
+
+       if (isEqual(arr1, arr2)) {
             console.log('parameters are equal');
             return true;
 
         } else {
+
             console.log(arr1 + '\n' + arr2);
         }
     };
@@ -473,6 +461,12 @@ try {
         return newParamVal;
     };
 
+    var setDefaults = function(cName, cVal){
+        if (getCookie(cName) = false){
+            setCookie(cName, cVal);
+        }
+    };
+
     waitFor(window.liveagentExt).then(function() {
         cCount = 0;
 
@@ -481,8 +475,12 @@ try {
             setCookie("Old_lae_vid", old_lae_vid);
         }
 
+        setDefaults('ml_eg', "DIRECT");
+        setDefaults('pid', "_pid_");
+
         var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
         syncCookies(mlp);
+
         var tvURL = "teamviewer.com";
         var currentDomain = window.location.hostname;
 
