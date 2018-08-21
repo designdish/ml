@@ -1,12 +1,14 @@
 try{ 
-
-    var cCount = 0;
-    var tvURL = "teamviewer.com";
     var currentDomain = window.location.hostname;
 
+    var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
+    var cCount = 0;
+    var tvURL = "teamviewer.com";
+    var tvUSURL = "teamviewer.us";
     var newPID = appendParamValues("pid", mlp);
     var pidCookie = getCookie("pid");
 
+    var today = new Date();
 
     var getParameterByName = function(name, url) {
         if (!url) url = window.location.href;
@@ -94,8 +96,6 @@ try{
     var logCookie = function(cName, cValue) {
         console.log("cookie name: " + cName + " | cookie value: " + cValue);
     };
-
-
 
     var updateParam = function(url, param, paramVal) {
         var newURL, tempArray, baseURL, additionalURL, temp;
@@ -269,7 +269,6 @@ try{
         return result;
     };
 
-    var today = new Date();
     var setCookie = function(cName, cValue, cExpires, cPath) {
         if (!cPath) {
             var domain =
@@ -428,10 +427,9 @@ try{
                 );
             }
         }
-
         console.dir(link.href);
         window.location = link.href;
-  };
+    };
 
     var syncCookies = function(cName) {
         if (typeof cName === "object") {
@@ -487,48 +485,18 @@ try{
         }
     return defaults;
     };
-  
-waitFor(window.liveagentExt).then(function() {
- 
-    if(pidCookie != false && newPID != null){
-        compareParams(pidCookie, newPID, '-')
-    };
-    
-    if (pidCookie != newPID && pidCookie != false) {
-        console.dir("pid cookie is not correct, attempting to set latest pid value of :" + newPID);
-        setCookie("pid", newPID);
-    } else {
-        console.dir("settingCookie for pid the value is : " + newPID);
-        setCookie("pid", newPID);
-    }
 
- if (currentDomain.indexOf("teamviewer.us") != -1){
-        initLinks(mlp, tvURL, ["pid", mlp]);
-    }
-});
-  
-
-
-window.onload = function(){
-    if (window.location.href.indexOf('teamviewer.us') != -1){
-            initLinks(mlp, tvURL, ["pid", mlp]);
-        }
-    else if (currentDomain.indexOf(tvURL) != -1) {
-            if (getParameterByName(lae_vid)!= undefined){ 
-               syncCookies(mlp);
-        }
-    };
-    
-    console.log(getCookie('pid'));
+if(currentDomain.indexOf(tvUSURL) != -1){
+    initLinks(mlp, tvURL, ["pid", mlp]);
+       
+   console.log(getCookie('pid'));
 
    if (getCookie("lae_vid") != false) {
-        old_lae_vid = getCookie("lae_vid");
-        setCookie("Old_lae_vid", old_lae_vid);
+            old_lae_vid = getCookie("lae_vid");
+            setCookie("Old_lae_vid", old_lae_vid);
     };
-
-    var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
-
-   if (getCookie("pid") === false){
+   
+    if (getCookie("pid") === false){
         setCookie("pid", "PIDEFAULT");
     }
 
@@ -540,6 +508,31 @@ window.onload = function(){
                syncCookies(mlp);
         }
     };
-} 
-});
-} catch (e) {}
+
+}
+
+
+if (currentDomain.indexOf(tvURL) != -1){
+     if (getParameterByName(lae_vid)!= undefined){ 
+               syncCookies(mlp);
+        }
+ waitFor(window.liveagentExt).then(function() {
+     
+        if(pidCookie != false && newPID != null){
+            compareParams(pidCookie, newPID, '-')
+        };
+        
+        if (pidCookie != newPID && pidCookie != false) {
+            console.dir("pid cookie is not correct, attempting to set latest pid value of :" + newPID);
+            setCookie("pid", newPID);
+        } else {
+            console.dir("settingCookie for pid the value is : " + newPID);
+            setCookie("pid", newPID);
+        }
+
+     if (currentDomain.indexOf("teamviewer.us") != -1){
+            initLinks(mlp, tvURL, ["pid", mlp]);
+        }
+    });
+}
+ }catch(e) {}
