@@ -487,25 +487,31 @@ try {
         }
     return defaults;
     };
+  
+    if (getCookie("lae_vid") != false) {
+        old_lae_vid = getCookie("lae_vid");
+        setCookie("Old_lae_vid", old_lae_vid);
+    };
+
+    var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
+
+    if (currentDomain.indexOf(tvURL) != -1) {
+            if (getParameterByName(lae_vid)!=undefined){ 
+               syncCookies(mlp);
+        }
+    };
 
     waitFor(window.liveagentExt).then(function() {
             cCount = 0;
-    
-            if (getCookie("lae_vid") != false) {
-                old_lae_vid = getCookie("lae_vid");
-                setCookie("Old_lae_vid", old_lae_vid);
-            }
+              
     
             if (getCookie("ml_eg") === false){
                 setCookie("ml_eg", "DIRECT");
             }
             if (getCookie("pid") === false){
-                setCookie("pid", "DIRECT");
+                setCookie("pid", "PIDEFAULT");
             }
-          
-            var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
-            syncCookies(mlp);
-    
+                        
             var tvURL = "teamviewer.com";
             var currentDomain = window.location.hostname;
     
@@ -531,9 +537,7 @@ try {
                 setCookie("pid", newPID);
             }
     
-            if (currentDomain.indexOf(tvURL) != -1) {
-                syncCookies(mlp);
-            } else {
+         else {
                 initLinks(mlp, tvURL, ["pid", mlp]);
             }
     });
