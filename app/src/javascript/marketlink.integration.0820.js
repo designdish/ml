@@ -1,13 +1,10 @@
-try{ 
     var currentDomain = window.location.hostname;
 
     var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
     var cCount = 0;
     var tvURL = "teamviewer.com";
     var tvUSURL = "teamviewer.us";
-    var newPID = appendParamValues("pid", mlp);
-    var pidCookie = getCookie("pid");
-
+  
     var today = new Date();
 
     var getParameterByName = function(name, url) {
@@ -477,6 +474,10 @@ try{
         return newParamVal;
     };
 
+      var newPID = appendParamValues("pid", mlp);
+    var pidCookie = getCookie("pid");
+
+
 if(currentDomain.indexOf(tvUSURL) != -1){
     initLinks(mlp, tvURL, ["pid", mlp]);
        
@@ -495,7 +496,7 @@ if(currentDomain.indexOf(tvUSURL) != -1){
         setCookie("ml_eg", "DIRECT");
     }
     if (currentDomain.indexOf(tvURL) != -1) {
-            if (getParameterByName(lae_vid)!=null){ 
+            if (getParameterByName("lae_vid")!=null){ 
                syncCookies(mlp);
         }
     };
@@ -504,7 +505,7 @@ if(currentDomain.indexOf(tvUSURL) != -1){
 
 
 if (currentDomain.indexOf(tvURL) != -1){
-     if (getParameterByName(lae_vid)!= null){ 
+     if (getParameterByName("lae_vid")!= null){ 
                syncCookies(mlp);
         }
  waitFor(window.liveagentExt).then(function() {
@@ -526,4 +527,3 @@ if (currentDomain.indexOf(tvURL) != -1){
         }
     });
 }
- }catch(e) {}
