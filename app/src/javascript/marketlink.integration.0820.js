@@ -112,7 +112,7 @@ try {
         return baseURL + "?" + newURL + paramText;
     };
 
-    var splitArray = function(str){
+    var splitArray = function(str, delimiter){
           result = {};
             str.split(delimiter).forEach(function(x){
                 var arr =  x.split(delimiter);
@@ -122,8 +122,8 @@ try {
     }
 
     var compareParams = function(param1, param2, delimiter) {
-        var arr1 = splitArray(param1);
-        var arr2 = splitArray(param2);
+        var arr1 = splitArray(param1, delimiter);
+        var arr2 = splitArray(param2, delimiter);
             
         if (isEqual(arr1, arr2)) {
             return true;
