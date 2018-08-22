@@ -1,6 +1,6 @@
 var currentDomain = window.location.hostname;
 
-var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
+var mlp = ["pid", "lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
 var cCount = 0;
 var tvURL = "teamviewer.com";
 var tvUSURL = "teamviewer.us";
@@ -392,7 +392,11 @@ var initLinks = function(params, str, joinParams) {
         addEvent(link, "click", function(event) {
             if (!samePageNavigation(link)) {
                 event.preventDefault();
-                updateLink(params, str, joinParams, event);
+                if (joinParams != undefined) {
+                    updateLink(params, str, joinParams, event);
+                } else {
+                    updateLink(params, str, event);
+                }
             }
         });
     }
@@ -525,40 +529,38 @@ var appendParamValues = function(baseParam, params) {
 };
 
 var newPID = appendParamValues("pid", mlp);
-var pidCookie = getCookie("pid");
 
-var pidDefaultCookie = function() {
-    var pid, ml_eg, lae_vid, mlAppendedString, passedPIDParam;
-    passedPIDParam = getParameterByName('pid');
-    pid = passedPIDParam.length != -1 ? passedPIDParam : (getCookie('pid') != false) ? getCookie('pid') : setCookie('pid', 'test');
-    ml_eg = getValue(ml_eg);
-    lae_vid = getValue(lae_vid);
-    pid = getValue(pid);
-    ml_eg = getValue(ml_eg);
-    lae_vid = getValue(lae_vid);
+var setPid = function() {
+    var pidBase = getPararameterByName('pid'),
+        ml_eg = getValue('ml_eg'),
+        ml_count = getValue('ml_count'),
+        lae_eg = getValue('lae_eg'),
+        ml_acc = getValue('ml_acc'),
+        lae_vid = getValue('lae_vid'),
+        pidParam, pid;
 
 
-    if ((pid !== false) && (ml_eg !== false) && (lae_vid !== false)) {
-        pidParam = 'pid=' + pid + '-ml_eg-' + ml_eg + '-lae_vid-' + lae_vid;
-    } else if (pid === false) {
-        pidParam = 'pid=-ml_eg-' + ml_eg + '-lae_vid-' + lae_vid;
-
-    } else if ((ml_eg !== false) && (lae_vid !== false)) {
-        pidParam = 'pid=-ml_eg-' + ml_eg + '-lae_vid-' + lae_vid;
+    if (pidBase !== null && pidBase.indexOf('pid') != -1) {
+        pid === pidBase;
     }
+
+    pidParam = '-pid-' + pid + '-ml_count-' + ml_count + '-ml_acc-' + ml_acc + '-ml_eg-' + ml_eg + '-lae_eg-' + lae_eg + '-lae_vid-' + lae_vid;
+
+    if (getCookie('pid') !== pidParam) {
+        setCookie(pidParam);
+    }
+
     return (pidParam);
 };
+
+var pidCookie = getCookie("pid");
 
 if (getCookie("ml_eg") === false) {
     setCookie("ml_eg", "DIRECT");
 }
 
-if (getCookie("pid") === false) {
-    setCookie("pid", pidDefaultCookie);
-}
-
 if (currentDomain.indexOf(tvUSURL) != -1) {
-    initLinks(mlp, tvURL, ["pid", mlp]);
+    initLinks(mlp, tvURL, mlp);
 
     console.log(getCookie("pid"));
 
@@ -602,7 +604,5 @@ if (currentDomain.indexOf(tvURL) != -1) {
             setCookie("pid", newPID);
         }
         initLinks(mlp, buyLink, ["pid", mlp]);
-
-
     });
 }
