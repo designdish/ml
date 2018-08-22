@@ -527,8 +527,34 @@ var appendParamValues = function(baseParam, params) {
 var newPID = appendParamValues("pid", mlp);
 var pidCookie = getCookie("pid");
 
+var pidDefaultCookie = function() {
+    var pid, ml_eg, lae_vid, mlAppendedString, passedPIDParam;
+    passedPIDParam = getParameterByName('pid');
+    pid = passedPIDParam.length != -1 ? passedPIDParam : (getCookie('pid') != false) ? getCookie('pid') : setCookie('pid', 'test');
+    ml_eg = getValue(ml_eg);
+    lae_vid = getValue(lae_vid);
+    pid = getValue(pid);
+    ml_eg = getValue(ml_eg);
+    lae_vid = getValue(lae_vid);
+
+
+    if ((pid !== false) && (ml_eg !== false) && (lae_vid !== false)) {
+        pidParam = 'pid=' + pid + '-ml_eg-' + ml_eg + '-lae_vid-' + lae_vid;
+    } else if (pid === false) {
+        pidParam = 'pid=-ml_eg-' + ml_eg + '-lae_vid-' + lae_vid;
+
+    } else if ((ml_eg !== false) && (lae_vid !== false)) {
+        pidParam = 'pid=-ml_eg-' + ml_eg + '-lae_vid-' + lae_vid;
+    }
+    return (pidParam);
+};
+
 if (getCookie("ml_eg") === false) {
     setCookie("ml_eg", "DIRECT");
+}
+
+if (getCookie("pid") === false) {
+    setCookie("pid", pidDefaultCookie);
 }
 
 if (currentDomain.indexOf(tvUSURL) != -1) {
@@ -541,9 +567,6 @@ if (currentDomain.indexOf(tvUSURL) != -1) {
         setCookie("Old_lae_vid", old_lae_vid);
     }
 
-    if (getCookie("pid") === false) {
-        setCookie("pid", "PIDEFAULT");
-    }
 
     if (getCookie("ml_eg") === false) {
         setCookie("ml_eg", "DIRECT");
