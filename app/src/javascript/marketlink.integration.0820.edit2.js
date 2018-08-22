@@ -555,6 +555,7 @@ var setPid = function() {
     return (pidParam);
 };
 
+
 var pidCookie = getCookie("pid");
 
 if (getCookie("ml_eg") === false) {
@@ -562,6 +563,7 @@ if (getCookie("ml_eg") === false) {
 }
 
 if (currentDomain.indexOf(tvUSURL) != -1) {
+    setPid();
     initLinks(mlp, tvURL, mlp);
 
     console.log(getCookie("pid"));
@@ -578,6 +580,8 @@ if (currentDomain.indexOf(tvUSURL) != -1) {
 }
 
 if (currentDomain.indexOf(tvURL) != -1) {
+    setPid();
+
     var buyLink = "newtvorder.aspx";
 
     if (getCookie("lae_vid") != false) {
