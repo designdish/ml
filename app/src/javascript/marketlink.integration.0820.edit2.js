@@ -605,6 +605,6 @@ if (currentDomain.indexOf(tvURL) != -1) {
             console.dir("settingCookie for pid the value is : " + newPID);
             setCookie("pid", newPID);
         }
-        initLinks(mlp, buyLink, ["pid", mlp]);
+        initLinks(mlp, buyLink, mlp);
     });
 }
