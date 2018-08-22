@@ -533,7 +533,7 @@ var appendParamValues = function(baseParam, params) {
 // var newPID = appendParamValues("pid", mlp);
 
 var setPid = function() {
-    var pidBase = getPararameterByName('pid'),
+    var pidBase = getParameterByName('pid'),
         ml_eg = getValue('ml_eg'),
         ml_count = getValue('ml_count'),
         lae_eg = getValue('lae_eg'),
