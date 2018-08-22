@@ -178,9 +178,9 @@ var updateJoinedParameters = function(joinValue, param, paramVal) {
 
 var appendParam = function(url, param, paramVal) {
     var newLink =
-        url.indexOf("?") != -1
-            ? url + "&" + param + "=" + paramVal
-            : url + "?" + param + "=" + paramVal;
+        url.indexOf("?") != -1 ?
+        url + "&" + param + "=" + paramVal :
+        url + "?" + param + "=" + paramVal;
     return newLink;
 };
 
@@ -189,9 +189,9 @@ var getValue = function(param, url) {
         url = window.location.href;
     }
     var parameter =
-        getParameterByName(param) != null
-            ? getParameterByName(param)
-            : getCookie(param);
+        getParameterByName(param) != null ?
+        getParameterByName(param) :
+        getCookie(param);
     if (parameter === undefined || parameter === false || parameter === null) {
         return "";
     } else {
@@ -232,21 +232,22 @@ var joinParameters = function(url, baseParam, targetParam) {
         if (targetVal != "") {
             console.dir(
                 "settingCookie for target: " +
-                    target +
-                    " the value (targetVal) is : " +
-                    targetVal,
+                target +
+                " the value (targetVal) is : " +
+                targetVal,
                 "color: #bada55"
             );
             setCookie(target, targetVal);
         }
-    }
-    setCookie(baseParam, newParamVal);
-    console.dir(
-        "settingCookie for baseParam (joinParameters)" +
+        console.dir(
+            "settingCookie for baseParam (joinParameters)" +
             target +
             " the value (newParamVal) is : " +
             targetVal
-    );
+        );
+    }
+    setCookie(baseParam, newParamVal);
+
 
     result = updateParam(url, baseParam, newParamVal);
 
@@ -274,23 +275,23 @@ var setCookie = function(cName, cValue, cExpires, cPath) {
     cCount++;
     console.dir(
         "the cookie value for " +
-            cName +
-            " was the number " +
-            cCount +
-            " cookie manipulated since pageload"
+        cName +
+        " was the number " +
+        cCount +
+        " cookie manipulated since pageload"
     );
     return cValue;
 };
 
 var updateCookie = function(cName, cValue) {
     var expireDate =
-        document.cookie.indexOf(cName) === -1
-            ? new Date(
-                  new Date().setTime(
-                      new Date().getTime() + 30 * 24 * 3600 * 1000
-                  )
-              )
-            : unescape(document.cookie).split("expireDate=")[1];
+        document.cookie.indexOf(cName) === -1 ?
+        new Date(
+            new Date().setTime(
+                new Date().getTime() + 30 * 24 * 3600 * 1000
+            )
+        ) :
+        unescape(document.cookie).split("expireDate=")[1];
     document.cookie =
         cName +
         "=" +
@@ -410,15 +411,16 @@ var updateLink = function(params, str, joinParams, event) {
 };
 
 var syncCookies = function(cName) {
+    var absValue;
     if (typeof cName === "object") {
         for (var i = 0; i < cName.length; i++) {
-            var absValue = getValue(cName[i]);
+            absValue = getValue(cName[i]);
             if (absValue != getCookie(cName[i])) {
                 setCookie(cName[i], absValue);
             }
         }
     } else {
-        var absValue = getValue(cName);
+        absValue = getValue(cName);
         if (absValue != getCookie(cName)) {
             setCookie(cName, absValue);
         }
@@ -482,6 +484,8 @@ if (currentDomain.indexOf(tvUSURL) != -1) {
 }
 
 if (currentDomain.indexOf(tvURL) != -1) {
+    var buyLink = "newtvorder.aspx";
+
     if (getCookie("lae_vid") != false) {
         old_lae_vid = getCookie("lae_vid");
         setCookie("Old_lae_vid", old_lae_vid);
@@ -499,7 +503,7 @@ if (currentDomain.indexOf(tvURL) != -1) {
         if (pidCookie != newPID && pidCookie != false) {
             console.dir(
                 "pid cookie is not correct, attempting to set latest pid value of :" +
-                    newPID
+                newPID
             );
             setCookie("pid", newPID);
         } else {
@@ -507,8 +511,7 @@ if (currentDomain.indexOf(tvURL) != -1) {
             setCookie("pid", newPID);
         }
 
-        if (currentDomain.indexOf("teamviewer.us") != -1) {
-            initLinks(mlp, tvURL, ["pid", mlp]);
-        }
+        initLinks(mlp, buyLink, ["pid", mlp]);
+
     });
 }

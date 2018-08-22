@@ -85,8 +85,9 @@ var eraseCookie = function(cName) {
     document.cookie = name + "=; Max-Age=-99999999;";
 };
 
-var logCookie = function(cName, cValue) {
-    console.log("cookie name: " + cName + " | cookie value: " + cValue);
+var logCookie = function(cName) {
+    console.log("---- cookie name: " + cName + " | cookie value: " + getCookie(cName) + "-------------- timestamp: " +
+        today.getTime());
 };
 
 var updateParam = function(url, param, paramVal) {
@@ -588,6 +589,9 @@ if (currentDomain.indexOf(tvUSURL) != -1) {
 
 if (currentDomain.indexOf(tvURL) != -1) {
     setPid();
+    for (var i = mlp.length - 1; i >= 0; i--) {
+        logCookie(mlp[i]);
+    }
 
     var buyLink = "newtvorder.aspx";
 

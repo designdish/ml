@@ -74,7 +74,7 @@ var checkParams = function(url, arr) {
             paramVal = getCookie(param);
             url = appendParam(url, param, paramVal);
         } else {
-            setCookie(param, paramVal);
+            // setCookie(param, paramVal);
             url = updateParam(url, param, paramVal);
         }
     }
@@ -445,8 +445,10 @@ var updateLink = function(params, str, joinParams, event) {
 
     if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1) {
         link.href = checkParams(currentPage, params);
-
-        if (joinParams != undefined) {
+        // if(joinParameters = undefined){
+ //     link.href = 
+ // }
+ if (joinParams != undefined) {
             link.href = joinParameters(linkURL, joinParams[0], joinParams[1]);
         }
     }
