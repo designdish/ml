@@ -542,14 +542,18 @@ var setPid = function() {
         pidParam, pid;
 
 
-    if (pidBase !== null && pidBase.indexOf('pid') != -1) {
-        pid = pidBase;
-    }
+    //     if (pidBase !== undefined){
+    //           pid = pidBase;
+    //     }
+    if (pidBase = undefined) {
+        pid = "";
 
+    }
     pidParam = '-pid-' + pid + '-ml_count-' + ml_count + '-ml_acc-' + ml_acc + '-ml_eg-' + ml_eg + '-lae_eg-' + lae_eg + '-lae_vid-' + lae_vid;
 
+
     if (getCookie('pid') !== pidParam) {
-        setCookie(pidParam);
+        setCookie('pid', pidParam);
     }
 
     return (pidParam);
