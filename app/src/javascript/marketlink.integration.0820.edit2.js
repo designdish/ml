@@ -530,7 +530,7 @@ var appendParamValues = function(baseParam, params) {
     return newParamVal;
 };
 
-var newPID = appendParamValues("pid", mlp);
+// var newPID = appendParamValues("pid", mlp);
 
 var setPid = function() {
     var pidBase = getPararameterByName('pid'),
@@ -589,22 +589,23 @@ if (currentDomain.indexOf(tvURL) != -1) {
         syncCookies(mlp);
     }
 
-
     waitFor(window.liveagentExt).then(function() {
-        if (pidCookie != false && newPID != null) {
-            compareParams(pidCookie, newPID, "-");
-        }
+        //         if (pidCookie != false && newPID != null) {
+        //             compareParams(pidCookie, newPID, "-");
+        //         }
 
-        if (pidCookie != newPID && pidCookie != false) {
-            console.dir(
-                "pid cookie is not correct, attempting to set latest pid value of :" +
-                newPID
-            );
-            setCookie("pid", newPID);
-        } else {
-            console.dir("settingCookie for pid the value is : " + newPID);
-            setCookie("pid", newPID);
-        }
+        //         if (pidCookie != newPID && pidCookie != false) {
+        //             console.dir(
+        //                 "pid cookie is not correct, attempting to set latest pid value of :" +
+        //                 newPID
+        //             );
+        //             setCookie("pid", newPID);
+        //         } else {
+        //             console.dir("settingCookie for pid the value is : " + newPID);
+        //             setCookie("pid", newPID);
+        //         }
+
+        console.log(getCookie("pid"));
         initLinks(mlp, buyLink, mlp);
     });
 }
