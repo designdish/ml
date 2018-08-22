@@ -1,5 +1,15 @@
+var currentDomain = window.location.hostname;
+
+var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
+var cCount = 0;
+var tvURL = "teamviewer.com";
+var tvUSURL = "teamviewer.us";
+
+var today = new Date();
+
 var getParameterByName = function(name, url) {
     if (!url) url = window.location.href;
+    // console.dir("getting value for " + name + " (using getParameterByName)");
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
         results = regex.exec(url);
@@ -16,10 +26,49 @@ var addEvent = function(obj, evt, fn) {
     }
 };
 
+var isEqual = function(value, other) {
+    var type = Object.prototype.toString.call(value);
+    if (type !== Object.prototype.toString.call(other)) return false;
+    if (["[object Array]", "[object Object]"].indexOf(type) < 0) return false;
+    var valueLen =
+        type === "[object Array]" ? value.length : Object.keys(value).length;
+    var otherLen =
+        type === "[object Array]" ? other.length : Object.keys(other).length;
+    if (valueLen !== otherLen) return false;
+
+    var compare = function(item1, item2) {
+        var itemType = Object.prototype.toString.call(item1);
+        if (["[object Array]", "[object Object]"].indexOf(itemType) >= 0) {
+            if (!isEqual(item1, item2)) return false;
+        } else {
+            if (itemType !== Object.prototype.toString.call(item2))
+                return false;
+            if (itemType === "[object Function]") {
+                if (item1.toString() !== item2.toString()) return false;
+            } else {
+                if (item1 !== item2) return false;
+            }
+        }
+    };
+
+    if (type === "[object Array]") {
+        for (var i = 0; i < valueLen; i++) {
+            if (compare(value[i], other[i]) === false) return false;
+        }
+    } else {
+        for (var key in value) {
+            if (value.hasOwnProperty(key)) {
+                if (compare(value[key], other[key]) === false) return false;
+            }
+        }
+    }
+    return true;
+};
+
 var checkParams = function(url, arr) {
     for (var i = arr.length - 1; i >= 0; i--) {
         var param = arr[i];
-        var paramVal = getParameterByName(param, url);
+        var paramVal = getValue(param);
 
         if (paramVal === null) {
             paramVal = getCookie(param);
@@ -44,13 +93,15 @@ var updateParam = function(url, param, paramVal) {
     var newURL, tempArray, baseURL, additionalURL, temp;
     tempArray = url.split("?");
     baseURL = tempArray[0];
-    additionalURL = tempArray[1];
+    additionalURL = tempArray[1] === undefined ? "" : tempArray[1];
+    //         additionalURL = tempArray[1];
     temp = "";
 
     if (additionalURL) {
         tempArray = additionalURL.split("&");
         for (var i = 0; i < tempArray.length; i++) {
             if (tempArray[i].split("=")[0] != param) {
+                newURL = newURL === undefined ? "" : newURL;
                 newURL += temp + tempArray[i];
                 temp = "&";
             }
@@ -60,40 +111,87 @@ var updateParam = function(url, param, paramVal) {
     return baseURL + "?" + newURL + paramText;
 };
 
+var splitArray = function(str, delimiter) {
+    result = {};
+
+    str.split(delimiter).forEach(function(x) {
+        var arr = x.split("~");
+        arr[1] && (result[arr[0]] = arr[1]);
+    });
+
+    var pArray = Object.keys(result).map(function(key) {
+        return { param: key, val: result[key] };
+    });
+
+    return pArray.sort();
+};
+
+Array.prototype.unique = function() {
+    var a = this.concat();
+    for (var i = 0; i < a.length; i++) {
+        for (var j = i + 1; j < a.length; j++) {
+            if (a[i] === a[j]) a.splice(j--, 1);
+        }
+    }
+    return a;
+};
+
+var compareParams = function(param1, param2, delimiter) {
+    var arr1 = splitArray(param1, delimiter);
+    var arr2 = splitArray(param2, delimiter);
+
+    var arr3 = arr1.concat(arr2).unique();
+    console.dir("merged pid is: " + arr3);
+
+    if (isEqual(arr1, arr2)) {
+        console.log("parameters are equal");
+        return true;
+    } else {
+        console.log(arr1 + "\n" + arr2);
+    }
+};
+
 var updateJoinedParameters = function(joinValue, param, paramVal) {
+    var newParam, tempArray, baseParam, additionalParam, temp;
     newParam = "";
     tempArray = joinValue.replace(" ", "").split("-");
     baseParam = tempArray[0];
     additionalParam = tempArray[1];
-    temp = "";
+    temp = "-";
 
     if (additionalParam) {
         tempArray = additionalParam.split("-");
         for (var i = 0; i < tempArray.length; i++) {
-            if (tempArray[i].split("-")[0] != param) {
+            if (tempArray[i].split("~")[0] != param) {
                 newParam += temp + tempArray[i];
                 temp = "-";
             }
         }
     }
 
-    var paramText = temp + "" + param + "-" + paramVal;
+    var paramText = temp + "" + param + "~" + paramVal;
+    console.dir(
+        "joined parameters " + baseParam + "-" + newParam + "-" + paramText
+    );
     return baseParam + "-" + newParam + paramText;
 };
 
 var appendParam = function(url, param, paramVal) {
     var newLink =
-        url.indexOf("?") != -1 ?
-        url + "&" + param + "=" + paramVal :
-        url + "?" + param + "=" + paramVal;
+        url.indexOf("?") != -1
+            ? url + "&" + param + "=" + paramVal
+            : url + "?" + param + "=" + paramVal;
     return newLink;
 };
 
-var getValue = function(param) {
+var getValue = function(param, url) {
+    if (url === undefined) {
+        url = window.location.href;
+    }
     var parameter =
-        getParameterByName(param) != null ?
-        getParameterByName(param) :
-        getCookie(param);
+        getParameterByName(param) != null
+            ? getParameterByName(param)
+            : getCookie(param);
     if (parameter === undefined || parameter === false || parameter === null) {
         return "";
     } else {
@@ -132,17 +230,29 @@ var joinParameters = function(url, baseParam, targetParam) {
             updateParam(url, target, targetVal);
         }
         if (targetVal != "") {
+            console.dir(
+                "settingCookie for target: " +
+                    target +
+                    " the value (targetVal) is : " +
+                    targetVal,
+                "color: #bada55"
+            );
             setCookie(target, targetVal);
         }
     }
     setCookie(baseParam, newParamVal);
+    console.dir(
+        "settingCookie for baseParam (joinParameters)" +
+            target +
+            " the value (newParamVal) is : " +
+            targetVal
+    );
 
     result = updateParam(url, baseParam, newParamVal);
 
     return result;
 };
 
-var today = new Date();
 var setCookie = function(cName, cValue, cExpires, cPath) {
     if (!cPath) {
         var domain =
@@ -161,18 +271,26 @@ var setCookie = function(cName, cValue, cExpires, cPath) {
         "; path=" +
         cPath;
 
+    cCount++;
+    console.dir(
+        "the cookie value for " +
+            cName +
+            " was the number " +
+            cCount +
+            " cookie manipulated since pageload"
+    );
     return cValue;
 };
 
 var updateCookie = function(cName, cValue) {
     var expireDate =
-        document.cookie.indexOf(cName) === -1 ?
-        new Date(
-            new Date().setTime(
-                new Date().getTime() + 30 * 24 * 3600 * 1000
-            )
-        ) :
-        unescape(document.cookie).split("expireDate=")[1];
+        document.cookie.indexOf(cName) === -1
+            ? new Date(
+                  new Date().setTime(
+                      new Date().getTime() + 30 * 24 * 3600 * 1000
+                  )
+              )
+            : unescape(document.cookie).split("expireDate=")[1];
     document.cookie =
         cName +
         "=" +
@@ -198,6 +316,7 @@ var getCookie = function(cName) {
 
     var cData = cStr.substring(startSlice, endSlice);
     var cValue = cData.substring(cData.indexOf("=") + 1, cData.length);
+    console.dir(cName + " value is now " + cValue);
     return cValue;
 };
 
@@ -209,9 +328,11 @@ var updateURLs = function(params, str, joinParams) {
         var link = links[i];
         var linkURL = link.href;
 
-        if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1 && linkURL.indexOf("#") === -1) {
-            // link.href = checkParams(currentPage, params);
-
+        if (
+            linkURL.indexOf(str) != -1 &&
+            linkURL.indexOf("mailto") === -1 &&
+            linkURL.indexOf("#") === -1
+        ) {
             if (joinParams != undefined) {
                 link.href = joinParameters(
                     linkURL,
@@ -284,65 +405,110 @@ var updateLink = function(params, str, joinParams, event) {
             link.href = joinParameters(linkURL, joinParams[0], joinParams[1]);
         }
     }
-
-    console.log(link.href);
+    console.dir(link.href);
     window.location = link.href;
-
 };
 
 var syncCookies = function(cName) {
-    var absValue = getValue(cName);
-    if (absValue != getCookie(cName)) {
-        setCookie(absValue);
+    if (typeof cName === "object") {
+        for (var i = 0; i < cName.length; i++) {
+            var absValue = getValue(cName[i]);
+            if (absValue != getCookie(cName[i])) {
+                setCookie(cName[i], absValue);
+            }
+        }
+    } else {
+        var absValue = getValue(cName);
+        if (absValue != getCookie(cName)) {
+            setCookie(cName, absValue);
+        }
     }
 };
 
 var appendParamValues = function(baseParam, params) {
     var currentParamVal = getParameterByName(baseParam);
-    var newParamVal;
+    var newParamVal = "-";
 
     for (var i = 0; i < params.length; i++) {
         var parameter = params[i];
-        syncCookies(parameter);
         var pVal = getValue(parameter);
 
-        if (params.indexOf(parameter) < params.length) {
-            newParamVal += parameter + '-' + pVal + '-';
+        if (params.indexOf(parameter) === 0) {
+            newParamVal = "";
+            newParamVal += parameter + "~" + pVal + "-";
+        } else if (params.indexOf(parameter) < params.length) {
+            newParamVal += parameter + "~" + pVal + "-";
         } else {
-            newParamVal += parameter + '-' + pVal;
+            newParamVal += parameter + "~" + pVal;
         }
     }
-    newParamVal = '-' + newParamVal;
+
+    if (currentParamVal != newParamVal && currentParamVal != null) {
+        newParamVal = updateJoinedParameters(
+            currentParamVal,
+            baseParam,
+            newParamVal
+        );
+    }
+
     return newParamVal;
 };
 
+var newPID = appendParamValues("pid", mlp);
+var pidCookie = getCookie("pid");
 
+if (currentDomain.indexOf(tvUSURL) != -1) {
+    initLinks(mlp, tvURL, ["pid", mlp]);
 
-waitFor(window.liveagentExt).then(function() {
+    console.log(getCookie("pid"));
 
     if (getCookie("lae_vid") != false) {
         old_lae_vid = getCookie("lae_vid");
         setCookie("Old_lae_vid", old_lae_vid);
     }
 
-    var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
-    var tvURL = "teamviewer.com";
-    var currentDomain = window.location.hostname;
-
-    var newPID = appendParamValues('pid', mlp);
-
-    if (getCookie('pid') != newPID) {
-        var pidCookie = getCookie('pid');
-        newPID = updateJoinedParameters(pidCookie, 'pid', newPid);
-        setCookie('pid', newPID);
-    } else {
-        setCookie('pid', newPID);
+    if (getCookie("pid") === false) {
+        setCookie("pid", "PIDEFAULT");
     }
 
+    if (getCookie("ml_eg") === false) {
+        setCookie("ml_eg", "DIRECT");
+    }
     if (currentDomain.indexOf(tvURL) != -1) {
-        syncCookies(mlp);
-
-    } else {
-        initLinks(mlp, tvURL, ["pid", mlp]);
+        if (getParameterByName("lae_vid") != null) {
+            syncCookies(mlp);
+        }
     }
-});
+}
+
+if (currentDomain.indexOf(tvURL) != -1) {
+    if (getCookie("lae_vid") != false) {
+        old_lae_vid = getCookie("lae_vid");
+        setCookie("Old_lae_vid", old_lae_vid);
+    }
+
+    if (getParameterByName("lae_vid") != null) {
+        syncCookies(mlp);
+    }
+
+    waitFor(window.liveagentExt).then(function() {
+        if (pidCookie != false && newPID != null) {
+            compareParams(pidCookie, newPID, "-");
+        }
+
+        if (pidCookie != newPID && pidCookie != false) {
+            console.dir(
+                "pid cookie is not correct, attempting to set latest pid value of :" +
+                    newPID
+            );
+            setCookie("pid", newPID);
+        } else {
+            console.dir("settingCookie for pid the value is : " + newPID);
+            setCookie("pid", newPID);
+        }
+
+        if (currentDomain.indexOf("teamviewer.us") != -1) {
+            initLinks(mlp, tvURL, ["pid", mlp]);
+        }
+    });
+}
