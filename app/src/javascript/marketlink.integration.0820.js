@@ -409,6 +409,18 @@ var updateLink = function(params, str, joinParams, event) {
     window.location = link.href;
 };
 
+var checkLinkParams = function(link, params){
+     if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1) {
+        link.href = checkParams(currentPage, params);
+
+        if (joinParams != undefined) {
+            link.href = joinParameters(linkURL, joinParams[0], joinParams[1]);
+        }
+    }
+}
+
+var joinParameters = function(str joinParameters)
+
 var syncCookies = function(cName) {
     if (typeof cName === "object") {
         for (var i = 0; i < cName.length; i++) {
@@ -490,6 +502,8 @@ if (currentDomain.indexOf(tvURL) != -1) {
     if (getParameterByName("lae_vid") != null) {
         syncCookies(mlp);
     }
+
+    
 
     waitFor(window.liveagentExt).then(function() {
         if (pidCookie != false && newPID != null) {
