@@ -3,10 +3,10 @@ var currentDomain = window.location.hostname;
 var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
 var cCount = 0;
 var tvURL = "teamviewer.com";
-var tvUSURL = "teamviewer.us";
+var tvUsURL = "teamviewer.us";
 
 var today = new Date();
-
+// Begin helper functions
 var getParameterByName = function(name, url) {
     if (!url) url = window.location.href;
     // console.dir("getting value for " + name + " (using getParameterByName)");
@@ -65,20 +65,72 @@ var isEqual = function(value, other) {
     return true;
 };
 
-var checkParams = function(url, arr) {
-    for (var i = arr.length - 1; i >= 0; i--) {
-        var param = arr[i];
-        var paramVal = getValue(param);
-
-        if (paramVal === null) {
-            paramVal = getCookie(param);
-            url = appendParam(url, param, paramVal);
-        } else {
-            setCookie(param, paramVal);
-            url = updateParam(url, param, paramVal);
-        }
+// Cookie Functions
+var setCookie = function(cName, cValue, cExpires, cPath) {
+    if (!cPath) {
+        var domain =
+            "/;domain=" + window.location.hostname.match(/[^\.]*\.[^.]*$/)[0];
+        cPath = domain;
     }
-    return url;
+    if (!cExpires) {
+        cExpires = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
+    }
+    document.cookie =
+        cName +
+        "=" +
+        cValue +
+        ";expires=" +
+        cExpires.toGMTString() +
+        "; path=" +
+        cPath;
+
+    cCount++;
+    console.dir(
+        "the cookie value for " +
+        cName +
+        " was the number " +
+        cCount +
+        " cookie manipulated since pageload"
+    );
+    return cValue;
+};
+
+var updateCookie = function(cName, cValue) {
+    var expireDate =
+        document.cookie.indexOf(cName) === -1 ?
+        new Date(
+            new Date().setTime(
+                new Date().getTime() + 30 * 24 * 3600 * 1000
+            )
+        ) :
+        unescape(document.cookie).split("expireDate=")[1];
+    document.cookie =
+        cName +
+        "=" +
+        cValue +
+        ",expireDate=" +
+        expireDate +
+        ";expires=" +
+        expireDate;
+};
+
+var getCookie = function(cName) {
+    var cStr = document.cookie;
+
+    var startSlice = cStr.indexOf(cName + "=");
+    if (startSlice == -1) {
+        return false;
+    }
+
+    var endSlice = cStr.indexOf(";", startSlice + 1);
+    if (endSlice == -1) {
+        endSlice = cStr.length;
+    }
+
+    var cData = cStr.substring(startSlice, endSlice);
+    var cValue = cData.substring(cData.indexOf("=") + 1, cData.length);
+    console.dir(cName + " value is now " + cValue);
+    return cValue;
 };
 
 var eraseCookie = function(cName) {
@@ -88,6 +140,57 @@ var eraseCookie = function(cName) {
 var logCookie = function(cName, cValue) {
     console.log("cookie name: " + cName + " | cookie value: " + cValue);
 };
+
+var syncCookies = function(cName) {
+    var absValue;
+    if (typeof cName === "object") {
+        for (var i = 0; i < cName.length; i++) {
+            absValue = getValue(cName[i]);
+            if (absValue != getCookie(cName[i])) {
+                setCookie(cName[i], absValue);
+            }
+        }
+    } else {
+        absValue = getValue(cName);
+        if (absValue != getCookie(cName)) {
+            setCookie(cName, absValue);
+        }
+    }
+};
+
+// End Cookie Functions
+
+var getValue = function(param, url) {
+    if (url === undefined) {
+        url = window.location.href;
+    }
+    var parameter =
+        getParameterByName(param) != null ?
+        getParameterByName(param) :
+        getCookie(param);
+    if (parameter === undefined || parameter === false || parameter === null) {
+        return "";
+    } else {
+        return parameter;
+    }
+};
+
+var checkParams = function(url, arr) {
+    for (var i = arr.length - 1; i >= 0; i--) {
+        var param = arr[i];
+        var paramVal = getValue(param);
+
+        if (paramVal !=  null) {
+            paramVal = getCookie(param);
+            url = appendParam(url, param, paramVal);
+        } else {
+            // setCookie(param, paramVal);
+            url = updateParam(url, param, paramVal);
+        }
+    }
+    return url;
+};
+
 
 var updateParam = function(url, param, paramVal) {
     var newURL, tempArray, baseURL, additionalURL, temp;
@@ -184,20 +287,6 @@ var appendParam = function(url, param, paramVal) {
     return newLink;
 };
 
-var getValue = function(param, url) {
-    if (url === undefined) {
-        url = window.location.href;
-    }
-    var parameter =
-        getParameterByName(param) != null ?
-        getParameterByName(param) :
-        getCookie(param);
-    if (parameter === undefined || parameter === false || parameter === null) {
-        return "";
-    } else {
-        return parameter;
-    }
-};
 
 var joinParameters = function(url, baseParam, targetParam) {
     var newParamVal, result, newLink, joinedParams, baseParamVal;
@@ -245,81 +334,15 @@ var joinParameters = function(url, baseParam, targetParam) {
             " the value (newParamVal) is : " +
             targetVal
         );
+
     }
     setCookie(baseParam, newParamVal);
-
 
     result = updateParam(url, baseParam, newParamVal);
 
     return result;
 };
 
-var setCookie = function(cName, cValue, cExpires, cPath) {
-    if (!cPath) {
-        var domain =
-            "/;domain=" + window.location.hostname.match(/[^\.]*\.[^.]*$/)[0];
-        cPath = domain;
-    }
-    if (!cExpires) {
-        cExpires = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
-    }
-    document.cookie =
-        cName +
-        "=" +
-        cValue +
-        ";expires=" +
-        cExpires.toGMTString() +
-        "; path=" +
-        cPath;
-
-    cCount++;
-    console.dir(
-        "the cookie value for " +
-        cName +
-        " was the number " +
-        cCount +
-        " cookie manipulated since pageload"
-    );
-    return cValue;
-};
-
-var updateCookie = function(cName, cValue) {
-    var expireDate =
-        document.cookie.indexOf(cName) === -1 ?
-        new Date(
-            new Date().setTime(
-                new Date().getTime() + 30 * 24 * 3600 * 1000
-            )
-        ) :
-        unescape(document.cookie).split("expireDate=")[1];
-    document.cookie =
-        cName +
-        "=" +
-        cValue +
-        ",expireDate=" +
-        expireDate +
-        ";expires=" +
-        expireDate;
-};
-
-var getCookie = function(cName) {
-    var cStr = document.cookie;
-
-    var startSlice = cStr.indexOf(cName + "=");
-    if (startSlice == -1) {
-        return false;
-    }
-
-    var endSlice = cStr.indexOf(";", startSlice + 1);
-    if (endSlice == -1) {
-        endSlice = cStr.length;
-    }
-
-    var cData = cStr.substring(startSlice, endSlice);
-    var cValue = cData.substring(cData.indexOf("=") + 1, cData.length);
-    console.dir(cName + " value is now " + cValue);
-    return cValue;
-};
 
 var updateURLs = function(params, str, joinParams) {
     var links = document.querySelectorAll("a");
@@ -410,34 +433,7 @@ var updateLink = function(params, str, joinParams, event) {
     window.location = link.href;
 };
 
-var checkLinkParams = function(link, params){
-     if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1) {
-        link.href = checkParams(currentPage, params);
 
-        if (joinParams != undefined) {
-            link.href = joinParameters(linkURL, joinParams[0], joinParams[1]);
-        }
-    }
-}
-
-var joinParameters = function(str joinParameters)
-
-var syncCookies = function(cName) {
-    var absValue;
-    if (typeof cName === "object") {
-        for (var i = 0; i < cName.length; i++) {
-            absValue = getValue(cName[i]);
-            if (absValue != getCookie(cName[i])) {
-                setCookie(cName[i], absValue);
-            }
-        }
-    } else {
-        absValue = getValue(cName);
-        if (absValue != getCookie(cName)) {
-            setCookie(cName, absValue);
-        }
-    }
-};
 
 var appendParamValues = function(baseParam, params) {
     var currentParamVal = getParameterByName(baseParam);
@@ -471,7 +467,11 @@ var appendParamValues = function(baseParam, params) {
 var newPID = appendParamValues("pid", mlp);
 var pidCookie = getCookie("pid");
 
-if (currentDomain.indexOf(tvUSURL) != -1) {
+if (getCookie("ml_eg") === false) {
+        setCookie("ml_eg", "DIRECT");
+    }
+
+if (currentDomain.indexOf(tvUsURL) != -1) {
     initLinks(mlp, tvURL, ["pid", mlp]);
 
     console.log(getCookie("pid"));
@@ -485,9 +485,7 @@ if (currentDomain.indexOf(tvUSURL) != -1) {
         setCookie("pid", "PIDEFAULT");
     }
 
-    if (getCookie("ml_eg") === false) {
-        setCookie("ml_eg", "DIRECT");
-    }
+    
     if (currentDomain.indexOf(tvURL) != -1) {
         if (getParameterByName("lae_vid") != null) {
             syncCookies(mlp);
@@ -496,9 +494,7 @@ if (currentDomain.indexOf(tvUSURL) != -1) {
 }
 
 if (currentDomain.indexOf(tvURL) != -1) {
-    var buyLink = "newtvorder.aspx";
-
-    if (getCookie("lae_vid") != false) {
+    initLinks();    if (getCookie("lae_vid") != false) {
         old_lae_vid = getCookie("lae_vid");
         setCookie("Old_lae_vid", old_lae_vid);
     }
@@ -506,26 +502,26 @@ if (currentDomain.indexOf(tvURL) != -1) {
     if (getParameterByName("lae_vid") != null) {
         syncCookies(mlp);
     }
-
-    
-
-    waitFor(window.liveagentExt).then(function() {
-        if (pidCookie != false && newPID != null) {
-            compareParams(pidCookie, newPID, "-");
-        }
-
-        if (pidCookie != newPID && pidCookie != false) {
-            console.dir(
-                "pid cookie is not correct, attempting to set latest pid value of :" +
-                newPID
-            );
-            setCookie("pid", newPID);
-        } else {
-            console.dir("settingCookie for pid the value is : " + newPID);
-            setCookie("pid", newPID);
-        }
-
-        initLinks(mlp, buyLink, ["pid", mlp]);
-
-    });
 }
+
+
+waitFor(window.liveagentExt).then(function() {
+    if (pidCookie != false && newPID != null) {
+        compareParams(pidCookie, newPID, "-");
+    }
+
+    if (pidCookie != newPID && pidCookie != false) {
+        console.dir(
+            "pid cookie is not correct, attempting to set latest pid value of :" +
+            newPID
+        );
+        setCookie("pid", newPID);
+    } else {
+        console.dir("settingCookie for pid the value is : " + newPID);
+        setCookie("pid", newPID);
+    }
+
+    if (currentDomain.indexOf("teamviewer.us") != -1) {
+        initLinks(mlp, tvURL, ["pid", mlp]);
+    }
+});

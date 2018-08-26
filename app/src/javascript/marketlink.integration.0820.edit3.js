@@ -1,6 +1,6 @@
 var currentDomain = window.location.hostname;
 
-var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
+var mlp = ["pid", "lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
 var cCount = 0;
 var tvURL = "teamviewer.com";
 var tvUSURL = "teamviewer.us";
@@ -74,7 +74,7 @@ var checkParams = function(url, arr) {
             paramVal = getCookie(param);
             url = appendParam(url, param, paramVal);
         } else {
-            setCookie(param, paramVal);
+            // setCookie(param, paramVal);
             url = updateParam(url, param, paramVal);
         }
     }
@@ -85,8 +85,9 @@ var eraseCookie = function(cName) {
     document.cookie = name + "=; Max-Age=-99999999;";
 };
 
-var logCookie = function(cName, cValue) {
-    console.log("cookie name: " + cName + " | cookie value: " + cValue);
+var logCookie = function(cName) {
+    console.log("---- cookie name: " + cName + " | cookie value: " + getCookie(cName) + "-------------- timestamp: " +
+        today.getTime());
 };
 
 var updateParam = function(url, param, paramVal) {
@@ -111,11 +112,26 @@ var updateParam = function(url, param, paramVal) {
     return baseURL + "?" + newURL + paramText;
 };
 
+// var splitArray = function(str, delimiter) {
+//     result = {};
+
+//     str.split(delimiter).forEach(function(x) {
+//         var arr = x.split("~");
+//         arr[1] && (result[arr[0]] = arr[1]);
+//     });
+
+//     var pArray = Object.keys(result).map(function(key) {
+//         return { param: key, val: result[key] };
+//     });
+
+//     return pArray.sort();
+// };
+
 var splitArray = function(str, delimiter) {
     result = {};
 
     str.split(delimiter).forEach(function(x) {
-        var arr = x.split("~");
+        var arr = x.split("-");
         arr[1] && (result[arr[0]] = arr[1]);
     });
 
@@ -125,7 +141,6 @@ var splitArray = function(str, delimiter) {
 
     return pArray.sort();
 };
-
 Array.prototype.unique = function() {
     var a = this.concat();
     for (var i = 0; i < a.length; i++) {
@@ -151,6 +166,32 @@ var compareParams = function(param1, param2, delimiter) {
     }
 };
 
+// var updateJoinedParameters = function(joinValue, param, paramVal) {
+//     var newParam, tempArray, baseParam, additionalParam, temp;
+//     newParam = "";
+//     tempArray = joinValue.replace(" ", "").split("-");
+//     baseParam = tempArray[0];
+//     additionalParam = tempArray[1];
+//     temp = "-";
+
+//     if (additionalParam) {
+//         tempArray = additionalParam.split("-");
+//         for (var i = 0; i < tempArray.length; i++) {
+//             if (tempArray[i].split("~")[0] != param) {
+//                 newParam += temp + tempArray[i];
+//                 temp = "-";
+//             }
+//         }
+//     }
+
+//     var paramText = temp + "" + param + "~" + paramVal;
+//     console.dir(
+//         "joined parameters " + baseParam + "-" + newParam + "-" + paramText
+//     );
+//     return baseParam + "-" + newParam + paramText;
+// };
+
+
 var updateJoinedParameters = function(joinValue, param, paramVal) {
     var newParam, tempArray, baseParam, additionalParam, temp;
     newParam = "";
@@ -162,14 +203,14 @@ var updateJoinedParameters = function(joinValue, param, paramVal) {
     if (additionalParam) {
         tempArray = additionalParam.split("-");
         for (var i = 0; i < tempArray.length; i++) {
-            if (tempArray[i].split("~")[0] != param) {
+            if (tempArray[i].split("-")[0] != param) {
                 newParam += temp + tempArray[i];
                 temp = "-";
             }
         }
     }
 
-    var paramText = temp + "" + param + "~" + paramVal;
+    var paramText = temp + "" + param + "-" + paramVal;
     console.dir(
         "joined parameters " + baseParam + "-" + newParam + "-" + paramText
     );
@@ -230,28 +271,29 @@ var joinParameters = function(url, baseParam, targetParam) {
             updateParam(url, target, targetVal);
         }
         if (targetVal != "") {
-            console.dir(
-                "settingCookie for target: " +
-                target +
-                " the value (targetVal) is : " +
-                targetVal,
-                "color: #bada55"
-            );
-            setCookie(target, targetVal);
+            //     console.dir(
+            //         "settingCookie for target: " +
+            //         target +
+            //         " the value (targetVal) is : " +
+            //         targetVal,
+            //         "color: #bada55"
+            //     );
+            //     setCookie(target, targetVal);
+            // }
+            // console.dir(
+            //     "settingCookie for baseParam (joinParameters)" +
+            //     target +
+            //     " the value (newParamVal) is : " +
+            //     targetVal
+            // );
         }
-        console.dir(
-            "settingCookie for baseParam (joinParameters)" +
-            target +
-            " the value (newParamVal) is : " +
-            targetVal
-        );
+        setCookie(baseParam, newParamVal);
+
+
+        result = updateParam(url, baseParam, newParamVal);
+
+        return result;
     }
-    setCookie(baseParam, newParamVal);
-
-
-    result = updateParam(url, baseParam, newParamVal);
-
-    return result;
 };
 
 var setCookie = function(cName, cValue, cExpires, cPath) {
@@ -317,7 +359,7 @@ var getCookie = function(cName) {
 
     var cData = cStr.substring(startSlice, endSlice);
     var cValue = cData.substring(cData.indexOf("=") + 1, cData.length);
-    console.dir(cName + " value is now " + cValue);
+    console.dir(cName + " value is now " + cValue + " @ " + today.getTime);
     return cValue;
 };
 
@@ -353,7 +395,11 @@ var initLinks = function(params, str, joinParams) {
         addEvent(link, "click", function(event) {
             if (!samePageNavigation(link)) {
                 event.preventDefault();
-                updateLink(params, str, joinParams, event);
+                if (joinParams != undefined) {
+                    updateLink(params, str, joinParams, event);
+                } else {
+                    updateLink(params, str, event);
+                }
             }
         });
     }
@@ -401,7 +447,9 @@ var updateLink = function(params, str, joinParams, event) {
 
     if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1) {
         link.href = checkParams(currentPage, params);
-
+        // if(joinParameters = undefined){
+        //     link.href = 
+        // }
         if (joinParams != undefined) {
             link.href = joinParameters(linkURL, joinParams[0], joinParams[1]);
         }
@@ -409,18 +457,6 @@ var updateLink = function(params, str, joinParams, event) {
     console.dir(link.href);
     window.location = link.href;
 };
-
-var checkLinkParams = function(link, params){
-     if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1) {
-        link.href = checkParams(currentPage, params);
-
-        if (joinParams != undefined) {
-            link.href = joinParameters(linkURL, joinParams[0], joinParams[1]);
-        }
-    }
-}
-
-var joinParameters = function(str joinParameters)
 
 var syncCookies = function(cName) {
     var absValue;
@@ -439,6 +475,36 @@ var syncCookies = function(cName) {
     }
 };
 
+// var appendParamValues = function(baseParam, params) {
+//     var currentParamVal = getParameterByName(baseParam);
+//     var newParamVal = "-";
+
+//     for (var i = 0; i < params.length; i++) {
+//         var parameter = params[i];
+//         var pVal = getValue(parameter);
+
+//         if (params.indexOf(parameter) === 0) {
+//             newParamVal = "";
+//             newParamVal += parameter + "~" + pVal + "-";
+//         } else if (params.indexOf(parameter) < params.length) {
+//             newParamVal += parameter + "~" + pVal + "-";
+//         } else {
+//             newParamVal += parameter + "~" + pVal;
+//         }
+//     }
+
+//     if (currentParamVal != newParamVal && currentParamVal != null) {
+//         newParamVal = updateJoinedParameters(
+//             currentParamVal,
+//             baseParam,
+//             newParamVal
+//         );
+//     }
+
+//     return newParamVal;
+// };
+
+
 var appendParamValues = function(baseParam, params) {
     var currentParamVal = getParameterByName(baseParam);
     var newParamVal = "-";
@@ -449,11 +515,11 @@ var appendParamValues = function(baseParam, params) {
 
         if (params.indexOf(parameter) === 0) {
             newParamVal = "";
-            newParamVal += parameter + "~" + pVal + "-";
+            newParamVal += parameter + "-" + pVal + "-";
         } else if (params.indexOf(parameter) < params.length) {
-            newParamVal += parameter + "~" + pVal + "-";
+            newParamVal += parameter + "-" + pVal + "-";
         } else {
-            newParamVal += parameter + "~" + pVal;
+            newParamVal += parameter + "-" + pVal;
         }
     }
 
@@ -468,11 +534,45 @@ var appendParamValues = function(baseParam, params) {
     return newParamVal;
 };
 
-var newPID = appendParamValues("pid", mlp);
+// var newPID = appendParamValues("pid", mlp);
+
+var setPid = function() {
+    var pidBase = getParameterByName('pid'),
+        ml_eg = getValue('ml_eg'),
+        ml_count = getValue('ml_count'),
+        lae_eg = getValue('lae_eg'),
+        ml_acc = getValue('ml_acc'),
+        lae_vid = getValue('lae_vid'),
+        pidParam, pid;
+
+
+    if (pidBase === undefined) {
+        pidBase = "";
+    } else {
+        pid = pidBase;
+    }
+
+
+    pidParam = '-pid-' + pid + '-ml_count-' + ml_count + '-ml_acc-' + ml_acc + '-ml_eg-' + ml_eg + '-lae_eg-' + lae_eg + '-lae_vid-' + lae_vid;
+
+
+    if (getCookie('pid') !== pidParam) {
+        setCookie('pid', pidParam);
+    }
+
+    return (pidParam);
+};
+
+
 var pidCookie = getCookie("pid");
 
+if (getCookie("ml_eg") === false) {
+    setCookie("ml_eg", "DIRECT");
+}
+
 if (currentDomain.indexOf(tvUSURL) != -1) {
-    initLinks(mlp, tvURL, ["pid", mlp]);
+    setPid();
+    initLinks(mlp, tvURL, mlp);
 
     console.log(getCookie("pid"));
 
@@ -481,21 +581,18 @@ if (currentDomain.indexOf(tvUSURL) != -1) {
         setCookie("Old_lae_vid", old_lae_vid);
     }
 
-    if (getCookie("pid") === false) {
-        setCookie("pid", "PIDEFAULT");
-    }
 
     if (getCookie("ml_eg") === false) {
         setCookie("ml_eg", "DIRECT");
     }
-    if (currentDomain.indexOf(tvURL) != -1) {
-        if (getParameterByName("lae_vid") != null) {
-            syncCookies(mlp);
-        }
-    }
 }
 
 if (currentDomain.indexOf(tvURL) != -1) {
+    setPid();
+    for (var i = mlp.length - 1; i >= 0; i--) {
+        logCookie(mlp[i]);
+    }
+
     var buyLink = "newtvorder.aspx";
 
     if (getCookie("lae_vid") != false) {
@@ -507,25 +604,23 @@ if (currentDomain.indexOf(tvURL) != -1) {
         syncCookies(mlp);
     }
 
-    
-
     waitFor(window.liveagentExt).then(function() {
-        if (pidCookie != false && newPID != null) {
-            compareParams(pidCookie, newPID, "-");
-        }
+        //         if (pidCookie != false && newPID != null) {
+        //             compareParams(pidCookie, newPID, "-");
+        //         }
 
-        if (pidCookie != newPID && pidCookie != false) {
-            console.dir(
-                "pid cookie is not correct, attempting to set latest pid value of :" +
-                newPID
-            );
-            setCookie("pid", newPID);
-        } else {
-            console.dir("settingCookie for pid the value is : " + newPID);
-            setCookie("pid", newPID);
-        }
+        //         if (pidCookie != newPID && pidCookie != false) {
+        //             console.dir(
+        //                 "pid cookie is not correct, attempting to set latest pid value of :" +
+        //                 newPID
+        //             );
+        //             setCookie("pid", newPID);
+        //         } else {
+        //             console.dir("settingCookie for pid the value is : " + newPID);
+        //             setCookie("pid", newPID);
+        //         }
 
-        initLinks(mlp, buyLink, ["pid", mlp]);
-
+        console.log(getCookie("pid"));
+        initLinks(mlp, buyLink, mlp);
     });
 }
