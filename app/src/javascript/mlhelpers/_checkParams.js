@@ -3,6 +3,9 @@ var checkParams = function(url, arr) {
         var param = arr[i];
         var paramVal = getValue(param);
 
+        if (paramVal.indexOf('-pidEnd-') != -1) {
+            paramVal = trimParam(param, '-pidEnd-');
+        }
         if (paramVal === null) {
             paramVal = getCookie(param);
             url = appendParam(url, param, paramVal);
