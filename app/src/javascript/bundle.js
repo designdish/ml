@@ -63,4 +63,4 @@ var loadIntegration = Promise.all([
 ]);
 
 
-waitFor(loadHelpers).then(waitFor(loadParams)).then(waitFor(loadCookies)).then(waitFor(loadValues)).then(waitFor(loadPid)).then(loadIntegration);
+waitFor(loadHelpers).then(waitFor(loadParams)).then(waitFor(loadCookies)).then(waitFor(loadValues)).then(waitFor(loadPid)).then(waitFor(loadIntegration)).then(integrateMarketLinc());

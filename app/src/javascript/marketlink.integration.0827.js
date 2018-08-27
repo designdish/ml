@@ -54,5 +54,3 @@ var integrateMarketLinc = function() {
         });
     }
 };
-
-integrateMarketLinc();
