@@ -25,8 +25,7 @@ Promise.all([
     load.js(buildUrl(helperCDN, "_compareParams.js")),
     load.js(buildUrl(helperCDN, "_joinParams.js")),
     load.js(buildUrl(helperCDN, "_updateJoinedParams.js")),
-    load.js(buildUrl(helperCDN, "_updateParams.js")),
-    load.js(buildUrl(helperCDN, "_appendParams.js"))
+    load.js(buildUrl(helperCDN, "_updateParams.js"))
 ]);
 
 
