@@ -14,8 +14,8 @@ var integrateMarketLinc = function() {
     }
 
     if (currentDomain.indexOf(tvUSURL) != -1) {
-        setPid();
-        initLinks(mlp, tvURL, mlp);
+        waitFor(window.setPid).then(setPid());
+        waitFor(window.initLinks).then(initLinks(mlp, tvURL, mlp));
 
         console.log(getCookie("pid"));
 
@@ -31,7 +31,7 @@ var integrateMarketLinc = function() {
     }
 
     if (currentDomain.indexOf(tvURL) != -1) {
-        setPid();
+        waitFor(window.setPid).then(setPid());
         for (var i = mlp.length - 1; i >= 0; i--) {
             logCookie(mlp[i]);
         }
@@ -50,7 +50,7 @@ var integrateMarketLinc = function() {
         waitFor(window.liveagentExt).then(function() {
 
             console.log(getCookie("pid"));
-            initLinks(mlp, buyLink, mlp);
+            waitFor(window.initLinks).then(initLinks(mlp, tvURL, mlp));
         });
     }
 };
