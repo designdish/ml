@@ -33,7 +33,7 @@ var setPid = function() {
         var cExpires = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
         var wwwDomain = "/;domain=" + window.location.hostname;
         setCookie('pid', pidParam);
-        setCookie('pid', pidParam, cExpires, wwwDomain);
+        setCookie('pid', pidParam, cExpires, "/");
     }
 
     return (pidParam);
