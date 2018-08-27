@@ -38,6 +38,6 @@ var load = (function() {
         return new Promise(function(resolve) {
             setTimeout(function() {
                 resolve(url);
-            }, 250);
+            }, 500);
         });
     };
