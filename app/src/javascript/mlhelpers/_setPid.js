@@ -10,7 +10,7 @@ var setPid = function() {
         PageVisitCommercialScore = getCookie('PageVisitCommercialScore'),
         pidParam, pid;
 
-
+    var tempTime = "-time-" + pidTime;
     if (pidBase === null) {
         pidBase = "";
     }
@@ -18,8 +18,7 @@ var setPid = function() {
         if (ENVisitCommercialScore != false || PageVisitCommercialScore != false) {
             if (ENVisitCommercialScore.indexOf(pidBase) != -1 || (PageVisitCommercialScore.indexOf(pidBase) != -1)) {
                 var tempPid = getParameterByName('pid', ENVisitCommercialScore);
-                tempPid = tempPid.substring(0, tempPid.indexOf('-time-' + pidTime));
-                pid = tempPid;
+                tempPid = tempPid.substring(0, tempPid.indexOf(tempTime));
             }
         }
     } else {
