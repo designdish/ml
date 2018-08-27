@@ -6,7 +6,7 @@ var initLinks = function(params, str, joinParams) {
             if (!samePageNavigation(link)) {
                 event.preventDefault();
                 if (joinParams != undefined) {
-                    updateLink(params, str, joinParams, event);
+                    updateLink(params, str, event);
                 } else {
                     updateLink(params, str, event);
                 }
