@@ -10,7 +10,7 @@ var updateLink = function(params, str, updateParams, event) {
         if (updateParams != undefined) {
             if (updateParams instanceof Array) {
                 for (i = 0; i > updateParams.length; i++) {
-                    link.href = updateParams(linkUrl, updateParams[i], getValue(updateParams));
+                    link.href = updateParams(linkURL, updateParams[i], getValue(updateParams));
                 }
             } else {
                 link.href = updateParams(linkURL, updateParams, getValue(updateParams));
