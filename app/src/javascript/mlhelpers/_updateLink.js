@@ -6,10 +6,8 @@ var updateLink = function(params, str, joinParams, event) {
     var currentPage = window.location.href;
 
     if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1) {
-        link.href = checkParams(currentPage, params);
-        // if(joinParameters = undefined){
-        //     link.href = 
-        // }
+        link.href = checkParams(linkURL, params);
+
         if (joinParams != undefined) {
             link.href = joinParameters(linkURL, joinParams[0], joinParams[1]);
         }

@@ -30,23 +30,7 @@ var joinParameters = function(url, baseParam, targetParam) {
             } else {
                 updateParam(url, target, targetVal);
             }
-            if (targetVal != "") {
-                //     console.dir(
-                //         "settingCookie for target: " +
-                //         target +
-                //         " the value (targetVal) is : " +
-                //         targetVal,
-                //         "color: #bada55"
-                //     );
-                //     setCookie(target, targetVal);
-                // }
-                // console.dir(
-                //     "settingCookie for baseParam (joinParameters)" +
-                //     target +
-                //     " the value (newParamVal) is : " +
-                //     targetVal
-                // );
-            }
+
             setCookie(baseParam, newParamVal);
 
 
