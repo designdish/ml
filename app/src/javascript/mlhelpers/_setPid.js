@@ -1,4 +1,4 @@
-var setPid = function() {
+var setPid = waitFor(window.getValue).then(function() {
     var pidBase = getParameterByName('pid'),
         ml_eg = getValue('ml_eg'),
         ml_count = getValue('ml_count'),
@@ -23,4 +23,4 @@ var setPid = function() {
     }
 
     return (pidParam);
-};
+});
