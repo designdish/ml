@@ -17,8 +17,8 @@ var setPid = function() {
     if (pidBase != "") {
         if (ENVisitCommercialScore != false || PageVisitCommercialScore != false) {
             if (ENVisitCommercialScore.indexOf(pidBase) != -1 || (PageVisitCommercialScore.indexOf(pidBase) != -1)) {
-                var tempPid = getParameterByName(pidBase, ENVisitCommercialScore);
-                tempPid = tempPid.substring(0, tempPid.indexOf('-'));
+                var tempPid = getParameterByName('pid', ENVisitCommercialScore);
+                tempPid = tempPid.substring(0, tempPid.indexOf('-time-' + pidTime));
                 pid = tempPid;
             }
         }
