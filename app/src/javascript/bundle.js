@@ -70,4 +70,8 @@ var loadBundle = new Promise(function(resolve, reject) {
     bundle();
 });
 
-loadBundle.then(integrateMarketLinc());
+loadBundle.then(
+    waitFor(window.integrateMarketLinc).then(
+        integrateMarketLinc()
+    )
+);
