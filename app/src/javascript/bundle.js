@@ -21,6 +21,7 @@ var loadBundle =
 
         // load parameter functions
         Promise.all([
+            load.js(buildUrl(helperCDN, "_getParams.js")),
             load.js(buildUrl(helperCDN, "_appendParam.js")),
             load.js(buildUrl(helperCDN, "_appendParamValues.js")),
             load.js(buildUrl(helperCDN, "_checkParams.js")),
