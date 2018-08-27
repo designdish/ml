@@ -45,6 +45,9 @@ Promise.all([
     load.js(buildUrl(helperCDN, "_getValue.js")),
     load.js(buildUrl(helperCDN, "_initLinks.js")),
     load.js(buildUrl(helperCDN, "_setPid.js")),
-    load.js(buildUrl(helperCDN, "_updateLink.js")),
-    load.js(buildUrl(distCDN, "marketlink.integration.0827.js")),
+    load.js(buildUrl(helperCDN, "_updateLink.js"))
+]);
+
+Promise.all([
+    load.js(buildUrl(distCDN, "marketlink.integration.0827.js"))
 ]);
