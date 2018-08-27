@@ -10,7 +10,7 @@ var setPid = function() {
         PageVisitCommercialScore = getCookie('PageVisitCommercialScore'),
         pidParam, pid;
 
-    var tempTime = "-time-" + pidTime;
+    var tempClosing = "-pidEnd-";
     if (pidBase === null) {
         pidBase = "";
     }
@@ -18,7 +18,7 @@ var setPid = function() {
         if (ENVisitCommercialScore != false || PageVisitCommercialScore != false) {
             if (ENVisitCommercialScore.indexOf(pidBase) != -1 || (PageVisitCommercialScore.indexOf(pidBase) != -1)) {
                 var tempPid = getParameterByName('pid', ENVisitCommercialScore);
-                tempPid = tempPid.substring(0, tempPid.indexOf(tempTime));
+                tempPid = tempPid.substring(0, tempPid.indexOf(tempClosing));
             }
         }
     } else {
@@ -26,7 +26,7 @@ var setPid = function() {
     }
 
 
-    pidParam = '-pid-' + pid + '-ml_count-' + ml_count + '-ml_acc-' + ml_acc + '-ml_eg-' + ml_eg + '-lae_eg-' + lae_eg + '-lae_vid-' + lae_vid + '-time-' + pidTime;
+    pidParam = '-pid-' + pid + '-ml_count-' + ml_count + '-ml_acc-' + ml_acc + '-ml_eg-' + ml_eg + '-lae_eg-' + lae_eg + '-lae_vid-' + lae_vid + tempClosing;
 
 
     if (getCookie('pid') !== pidParam) {
