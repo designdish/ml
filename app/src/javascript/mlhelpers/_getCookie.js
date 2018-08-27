@@ -13,6 +13,6 @@ var getCookie = function(cName) {
 
     var cData = cStr.substring(startSlice, endSlice);
     var cValue = cData.substring(cData.indexOf("=") + 1, cData.length);
-    console.dir(cName + " value is now " + cValue + " @ " + today.getTime);
+    console.dir(cName + " value is now " + cValue + " @ " + today);
     return cValue;
 };
