@@ -14,7 +14,8 @@ var loadHelpers = Promise.all([
     load.js(buildUrl(helperCDN, "_splitArray.js")),
     load.js(buildUrl(helperCDN, "_isEqual.js")),
     load.js(buildUrl(helperCDN, "_samePageNavigation.js")),
-    load.js(buildUrl(helperCDN, "_getClosest.js"))
+    load.js(buildUrl(helperCDN, "_getClosest.js")),
+    console.log("helpers helpers loaded")
 ]);
 
 
@@ -26,7 +27,8 @@ var loadParams = Promise.all([
     load.js(buildUrl(helperCDN, "_compareParams.js")),
     load.js(buildUrl(helperCDN, "_joinParams.js")),
     load.js(buildUrl(helperCDN, "_updateJoinedParams.js")),
-    load.js(buildUrl(helperCDN, "_updateParams.js"))
+    load.js(buildUrl(helperCDN, "_updateParams.js")),
+    console.log("params helpers loaded")
 ]);
 
 
@@ -37,18 +39,21 @@ var loadCookies = Promise.all([
     load.js(buildUrl(helperCDN, "_logCookie.js")),
     load.js(buildUrl(helperCDN, "_setCookie.js")),
     load.js(buildUrl(helperCDN, "_updateCookie.js")),
-    load.js(buildUrl(helperCDN, "_syncCookies.js"))
+    load.js(buildUrl(helperCDN, "_syncCookies.js")),
+    console.log("cookies helpers loaded")
 ]);
 
-var loadPid = waitFor(buildUrl(helperCDN, "_getValue.js")).then(waitFor(buildUrl(helperCDN, "_syncCookies.js"))).then(load.js(buildUrl(helperCDN, "_setPid.js")));
+var loadPid = waitFor(buildUrl(helperCDN, "_getValue.js")).then(waitFor(buildUrl(helperCDN, "_syncCookies.js"))).then(load.js(buildUrl(helperCDN, "_setPid.js")), console.log("pid helpers loaded"));
 // put it all together
 var loadValues = Promise.all([
     load.js(buildUrl(helperCDN, "_initLinks.js")),
-    load.js(buildUrl(helperCDN, "_updateLink.js"))
+    load.js(buildUrl(helperCDN, "_updateLink.js")),
+    console.log("values helpers loaded")
 ]);
 
 var loadIntegration = Promise.all([
-    load.js(buildUrl(distCDN, "marketlink.integration.0827.js"))
+    load.js(buildUrl(distCDN, "marketlink.integration.0827.js")),
+    console.log("integration helpers loaded")
 ]);
 
 
