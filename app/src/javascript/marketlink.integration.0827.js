@@ -49,7 +49,7 @@ var integrateMarketLinc = function() {
         waitFor(window.liveagentExt).then(function() {
 
             console.log(getCookie("pid"));
-            waitFor(window.initLinks).then(initLinks(mlp, tvURL, mlp));
+            waitFor(window.initLinks).then(initLinks(mlp, tvURL));
         });
     }
 };
