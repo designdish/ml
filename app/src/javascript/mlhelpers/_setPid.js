@@ -11,10 +11,10 @@ var setPid = function() {
         pidParam, pid;
 
 
-    if (pidBase === undefined) {
+    if (pidBase === null) {
         pidBase = "";
     }
-    if (pidBase != undefined) {
+    if (pidBase != null) {
         if (ENVisitCommercialScore.indexOf(pidBase) != -1 || (PageVisitCommercialScore.indexOf(pidBase) != -1)) {
             var tempPid = getParameterByName(pidBase, ENVisitCommercialScore);
             tempPid = tempPid.substring(0, tempPid.indexOf('-'));
