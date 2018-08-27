@@ -8,7 +8,8 @@ var buildUrl = function(cdn, file) {
 
 
 // load helper functions
-Promise.all([
+
+var loadHelpers = Promise.all([
     load.js(buildUrl(helperCDN, "_addEvent.js")),
     load.js(buildUrl(helperCDN, "_splitArray.js")),
     load.js(buildUrl(helperCDN, "_isEqual.js")),
@@ -18,7 +19,7 @@ Promise.all([
 
 
 //load parameter functions
-Promise.all([
+var loadParams = Promise.all([
     load.js(buildUrl(helperCDN, "_appendParam.js")),
     load.js(buildUrl(helperCDN, "_appendParamValues.js")),
     load.js(buildUrl(helperCDN, "_checkParams.js")),
@@ -30,7 +31,7 @@ Promise.all([
 
 
 // load cookie functions
-Promise.all([
+var loadCookies = Promise.all([
     load.js(buildUrl(helperCDN, "_getCookie.js")),
     load.js(buildUrl(helperCDN, "_eraseCookie.js")),
     load.js(buildUrl(helperCDN, "_logCookie.js")),
@@ -41,13 +42,16 @@ Promise.all([
 
 
 // put it all together
-Promise.all([
+var loadValues = Promise.all([
     load.js(buildUrl(helperCDN, "_getValue.js")),
     load.js(buildUrl(helperCDN, "_initLinks.js")),
     load.js(buildUrl(helperCDN, "_setPid.js")),
     load.js(buildUrl(helperCDN, "_updateLink.js"))
 ]);
 
-Promise.all([
+var loadIntegration = Promise.all([
     load.js(buildUrl(distCDN, "marketlink.integration.0827.js"))
 ]);
+
+
+waitFor(loadHelpers).then(loadParams).then(loadCookies).then(loadValues).then(loadIntegration);
