@@ -1,4 +1,4 @@
-var updateLink = function(params, str, joinParams, event) {
+var updateLink = function(params, str, updateParams, event) {
     var link = event.target;
     link = getClosest(link, "a");
     linkURL = link.href;
@@ -10,8 +10,8 @@ var updateLink = function(params, str, joinParams, event) {
         // if(joinParameters = undefined){
         //     link.href = 
         // }
-        if (joinParams != undefined) {
-            link.href = joinParameters(linkURL, joinParams[0], joinParams[1]);
+        if (updateParams != undefined) {
+            link.href = updateParams(linkURL, updateParams, getValue(updateParams));
         }
     }
     console.dir(link.href);
