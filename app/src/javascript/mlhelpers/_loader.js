@@ -6,9 +6,11 @@ var load = (function() {
                     var parent = "body";
                     var attr = "src";
                     element.onload = function() {
+                        console.log(url + " loaded @ " + today);
                         resolve(url);
                     };
                     element.onerror = function() {
+                        console.log(url + " pending @ " + today);
                         waitFor(url);
                     };
                     switch (tag) {
