@@ -14,11 +14,13 @@ var setPid = function() {
     if (pidBase === null) {
         pidBase = "";
     }
-    if (pidBase != null) {
-        if (ENVisitCommercialScore.indexOf(pidBase) != -1 || (PageVisitCommercialScore.indexOf(pidBase) != -1)) {
-            var tempPid = getParameterByName(pidBase, ENVisitCommercialScore);
-            tempPid = tempPid.substring(0, tempPid.indexOf('-'));
-            pid = tempPid;
+    if (pidBase != "") {
+        if (ENVisitCommercialScore != false || PageVisitCommercialScore != false) {
+            if (ENVisitCommercialScore.indexOf(pidBase) != -1 || (PageVisitCommercialScore.indexOf(pidBase) != -1)) {
+                var tempPid = getParameterByName(pidBase, ENVisitCommercialScore);
+                tempPid = tempPid.substring(0, tempPid.indexOf('-'));
+                pid = tempPid;
+            }
         }
     } else {
         pid = pidBase;

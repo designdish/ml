@@ -64,9 +64,7 @@ var loadIntegration = Promise.all([
 ]);
 
 var loadBundle = function() {
-    loadHelpers.then(loadParams).then(loadCookies).then(loadValues).then(loadPid).then(loadIntegration).then(function() {
-        integrateMarketLinc();
-    });
+    loadHelpers.then(loadParams).then(loadCookies).then(loadValues).then(loadPid).then(loadIntegration);
 };
 
 loadBundle();
