@@ -37,20 +37,14 @@ var loadCookies = Promise.all([
     load.js(buildUrl(helperCDN, "_logCookie.js")),
     load.js(buildUrl(helperCDN, "_setCookie.js")),
     load.js(buildUrl(helperCDN, "_updateCookie.js")),
-
+    load.js(buildUrl(helperCDN, "_syncCookies.js"))
 ]);
 
+var loadPid = waitFor(buildUrl(helperCDN, "_getValue.js")).then(waitFor(buildUrl(helperCDN, "_syncCookies.js"))).then(load.js(buildUrl(helperCDN, "_setPid.js")));
 // put it all together
 var loadValues = Promise.all([
-    load.js(
-        buildUrl(helperCDN, "_getValue.js")).then(
-        load.js(
-            buildUrl(helperCDN, "_syncCookies.js"))).then(
-        load.js(
-            buildUrl(helperCDN, "_setPid.js"))).then(
-        load.js(
-            buildUrl(helperCDN, "_initLinks.js"))).then(
-        load.js(buildUrl(helperCDN, "_updateLink.js")))
+    load.js(buildUrl(helperCDN, "_initLinks.js")),
+    load.js(buildUrl(helperCDN, "_updateLink.js"))
 ]);
 
 var loadIntegration = Promise.all([
@@ -58,4 +52,4 @@ var loadIntegration = Promise.all([
 ]);
 
 
-waitFor(loadHelpers).then(loadParams).then(loadCookies).then(loadValues).then(loadIntegration);
+waitFor(loadHelpers).then(loadParams).then(loadCookies).then(loadPid).then(loadValues).then(loadIntegration);
