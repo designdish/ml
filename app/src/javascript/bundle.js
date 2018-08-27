@@ -62,12 +62,10 @@ var loadIntegration = Promise.all([
     console.log("integration helpers loaded")
 ]);
 
-var bundle = function() {
-    waitFor(loadHelpers).then(waitFor(loadParams)).then(waitFor(loadCookies)).then(waitFor(loadValues)).then(waitFor(loadPid)).then(waitFor(loadIntegration));
+var loadBundle = function() {
+    loadHelpers.then(loadParams).then(loadCookies).then(loadValues).then(loadPid).then(loadIntegration).then(function() {
+        integrateMarketLinc();
+    });
 };
-
-var loadBundle = new Promise(function(resolve, reject) {
-    bundle();
-});
 
 loadBundle();
