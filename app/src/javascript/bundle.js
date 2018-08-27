@@ -62,5 +62,3 @@ var loadBundle =
             console.log("integration helpers loaded @ " + today)
         ])
     );
-
-loadBundle();
