@@ -1,11 +1,13 @@
+var currentDomain = window.location.hostname;
+var mlp = ["pid", "lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
+var cCount = 0;
+var tvURL = "teamviewer.com";
+var tvUSURL = "teamviewer.us";
+var today = new Date();
+var pidCookie = getCookie("pid");
+
 var integrateMarketLinc = function() {
-    var currentDomain = window.location.hostname;
-    var mlp = ["pid", "lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
-    var cCount = 0;
-    var tvURL = "teamviewer.com";
-    var tvUSURL = "teamviewer.us";
-    var today = new Date();
-    var pidCookie = getCookie("pid");
+
 
     if (getCookie("ml_eg") === false) {
         setCookie("ml_eg", "DIRECT");
