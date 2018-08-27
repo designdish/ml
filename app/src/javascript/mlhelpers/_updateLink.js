@@ -7,11 +7,14 @@ var updateLink = function(params, str, updateParams, event) {
 
     if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1) {
         link.href = checkParams(currentPage, params);
-        // if(joinParameters = undefined){
-        //     link.href = 
-        // }
         if (updateParams != undefined) {
-            link.href = updateParams(linkURL, updateParams, getValue(updateParams));
+            if (updateParams instanceof Array) {
+                for (i = 0; i > updateParams.length; i++) {
+                    link.href = updateParams(linkUrl, updateParams[i], getValue(updateParams));
+                }
+            } else {
+                link.href = updateParams(linkURL, updateParams, getValue(updateParams));
+            }
         }
     }
     console.dir(link.href);
