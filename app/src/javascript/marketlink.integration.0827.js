@@ -52,3 +52,5 @@ var integrateMarketLinc = function() {
         });
     }
 };
+
+integrateMarketLink();
