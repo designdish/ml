@@ -60,7 +60,9 @@ var loadBundle =
 
         // load integration of functions into application
         Promise.all([
-            load.js(buildUrl(distCDN, "marketlink.integration.0827.js")),
+            load.js(buildUrl(distCDN, "marketlinc.integration.us.0828.js")),
+            load.js(buildUrl(distCDN, "marketlinc.integration.com.0828.js")),
+            load.js(buildUrl(distCDN, "marketlinc.integration.0827.js")),
             console.log("integration helpers loaded @ " + today)
         ])
     );
