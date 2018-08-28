@@ -10,11 +10,11 @@ var integrateMarketLinc = function() {
         setCookie("ml_eg", "DIRECT");
     }
 
-    if (currentDomain.indexOf(tvUSURL)){
+    if (currentDomain.indexOf(tvUSURL) != -1){
         integrateMarketLincUS();
     }
 
-     if (currentDomain.indexOf(tvURL)){
+     if (currentDomain.indexOf(tvURL) != -1){
         integrateMarketLincGlobal();
     }
     
