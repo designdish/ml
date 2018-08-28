@@ -31,7 +31,7 @@ var setPid = function() {
 
 
     pidParam = '-pid-' + pidBase + '-ml_count-' + ml_count + '-ml_acc-' + ml_acc + '-ml_eg-' + ml_eg + '-lae_eg-' + lae_eg + '-lae_vid-' + lae_vid + tempClosing;
-    pidParam = pidParam.substring(0, pidParam.indexOf(tempClosing));
+    // pidParam = pidParam.substring(0, pidParam.indexOf(tempClosing));
 
     if (getCookie('pid') !== pidParam) {
         var cExpires = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
