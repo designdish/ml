@@ -5,12 +5,14 @@ var syncCookies = function(cName) {
             absValue = getValue(cName[i]);
             if (absValue != getCookie(cName[i])) {
                 setCookie(cName[i], absValue);
+                setCookie(cName[i], absValue, '', '/');
             }
         }
     } else {
         absValue = getValue(cName);
         if (absValue != getCookie(cName)) {
             setCookie(cName, absValue);
+            setCookie(cName[i], absValue, '', '/');
         }
     }
 };
