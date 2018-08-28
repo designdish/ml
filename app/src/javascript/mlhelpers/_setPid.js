@@ -1,4 +1,5 @@
-var setPid = function() {
+var setPid = function(str) {
+
     var pidBase = getParameterByName('pid'),
         ml_eg = getValue('ml_eg'),
         ml_count = getValue('ml_count'),
@@ -12,6 +13,10 @@ var setPid = function() {
 
         pidParam, pid;
 
+        if(str = undefined){
+            str = pidBase;
+        }
+    
     var tempClosing = "-pidEnd-";
     if (pidBase === null) {
         pidBase = "";
@@ -27,6 +32,7 @@ var setPid = function() {
     } else {
         pid = pidBase;
     }
+
 
 
 

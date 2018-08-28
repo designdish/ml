@@ -38,9 +38,10 @@ var integrateMarketLinc = function() {
                 }else{
                     tempPidCookie = updateJoinedParameters('pid', 'pid', tempPid);
                     setCookie('pid', tempPidCookie, '', '/');
+                   setPid();
                 }
             }
-        });
+        }setPid());
         for (var i = mlp.length - 1; i >= 0; i--) {
             logCookie(mlp[i]);
         }
