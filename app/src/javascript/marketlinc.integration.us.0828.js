@@ -1,4 +1,4 @@
-var integrateMarketLincUS{
+var integrateMarketLincUS = function(){
     waitFor(window.setPid).then(setPid());
     waitFor(window.initLinks).then(initLinks(mlp, tvURL, mlp));
 
