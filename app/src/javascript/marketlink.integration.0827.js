@@ -36,7 +36,8 @@ var integrateMarketLinc = function() {
                 if (tempPidCookie.indexOf(tempPid) != -1){
                     setPid();
                 }else{
-                    updateJoinedParam('pid', 'pid', tempPid)
+                    tempPidCookie = updateJoinedParameters('pid', 'pid', tempPid);
+                    setCookie('pid', tempPidCookie, '', '/');
                 }
             }
         });
