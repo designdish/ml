@@ -23,7 +23,6 @@ var integrateMarketLinc = function() {
             setCookie("Old_lae_vid", old_lae_vid);
         }
 
-
         if (getCookie("ml_eg") === false) {
             setCookie("ml_eg", "DIRECT");
         }
@@ -49,7 +48,7 @@ var integrateMarketLinc = function() {
         waitFor(window.liveagentExt).then(function() {
 
             console.log(getCookie("pid"));
-            waitFor(window.initLinks).then(initLinks(mlp, tvURL));
+            waitFor(window.initLinks).then(initLinks(mlp, buyLink));
         });
     }
 };
