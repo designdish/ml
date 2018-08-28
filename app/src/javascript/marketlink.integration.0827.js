@@ -30,7 +30,7 @@ var integrateMarketLinc = function() {
 
     if (currentDomain.indexOf(tvURL) != -1) {
         waitFor(window.setPid).then(function(){
-         if (getParameterByName('pid').length > 0){
+         if (getParameterByName('pid')!= null){
                 var tempPid = getParameterByName('pid');
                 var tempPidCookie = getCookie('pid');
                 if (tempPidCookie.indexOf(tempPid) != -1){
