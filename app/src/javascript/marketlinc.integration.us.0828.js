@@ -12,4 +12,4 @@ var integrateMarketLincUS = function(){
     if (getCookie("ml_eg") === false) {
         setCookie("ml_eg", "DIRECT");
     }
-}
+};
