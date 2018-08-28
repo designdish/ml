@@ -41,7 +41,8 @@ var integrateMarketLinc = function() {
                    setPid();
                 }
             }
-        }setPid());
+        setPid()
+    });
         for (var i = mlp.length - 1; i >= 0; i--) {
             logCookie(mlp[i]);
         }
