@@ -29,7 +29,17 @@ var integrateMarketLinc = function() {
     }
 
     if (currentDomain.indexOf(tvURL) != -1) {
-        waitFor(window.setPid).then(setPid());
+        waitFor(window.setPid).then(function(){
+         if (getParameterByName('pid').length > 0){
+                var tempPid = getParameterByName('pid');
+                var tempPidCookie = getCookie('pid');
+                if (tempPidCookie.indexOf(tempPid) != -1){
+                    setPid();
+                }else{
+                    updateJoinedParam('pid', 'pid', tempPid)
+                }
+            }
+        });
         for (var i = mlp.length - 1; i >= 0; i--) {
             logCookie(mlp[i]);
         }
