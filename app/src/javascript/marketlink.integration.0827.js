@@ -1,5 +1,5 @@
 var currentDomain = window.location.hostname;
-var mlp = ["pid", "lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count"];
+var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count","pid"];
 var cCount = 0;
 var tvURL = "teamviewer.com";
 var tvUSURL = "teamviewer.us";
