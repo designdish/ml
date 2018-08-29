@@ -10,6 +10,11 @@ var integrateMarketLinc = function() {
         setCookie("ml_eg", "DIRECT");
     }
 
+    if (getCookie("lae_vid") != false) {
+        old_lae_vid = getCookie("lae_vid");
+        setCookie("Old_lae_vid", old_lae_vid);
+    }
+
     if (currentDomain.indexOf(tvUSURL) != -1){
         integrateMarketLincUS();
     }
