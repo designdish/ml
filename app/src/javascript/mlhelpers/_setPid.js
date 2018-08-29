@@ -51,7 +51,6 @@ var setPid = function(str) {
         setCookie('pid', pidParam);
         setCookie('pid', pidParam, cExpires, "/");
         setCookie('pid', pidParam, cExpires, "." + wwwDomain);
-
     }
 
     return (pidParam);
