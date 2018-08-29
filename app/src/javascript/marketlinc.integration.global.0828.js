@@ -18,7 +18,8 @@ var integrateMarketLincGlobal = function(){
 
     // check for passed parameter
 
-    var pidParam = getParameterByName('pid'); 
+    var pidParam = getParameterByName('pid') = null ? "" : getParameterByName('pid'); 
+
 
     // check for a cookie
     var pidCookie = getCookie('pid');
@@ -38,8 +39,8 @@ var integrateMarketLincGlobal = function(){
     if (pidMatch === false){
         var tempPid = getParameterByName('pid');
         var pastPid = getPidSubParameter(pidCookie);
-        tempPid = pidCookie.replace(pastPid[0], "");
-        var newPid = pidParam + pastPid[0];
+        tempPid = pidCookie.replace('-pid-' + pastPid[0], "");
+        var newPid = '-pid-' + pidParam + '-' + pastPid[0] + tempPid;
         console.log("the new pid is " + newPid);
     };
 
