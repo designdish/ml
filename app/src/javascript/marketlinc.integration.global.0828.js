@@ -12,6 +12,11 @@
     }
 };
 
+var getPidSubParameter = function(str){
+    var regex = new RegExp(/(?<=-pid-)(.*)(?=-ml_count)/);
+    return regex.exec(str);
+};
+
 var integrateMarketLincGlobal = function(){
 
     var buyLink = "newtvorder.aspx";
@@ -28,12 +33,6 @@ var integrateMarketLincGlobal = function(){
 
     var pidMatch = (matchParam('pid'));
    
-
-    var getPidSubParameter = function(str){
-        var regex = new RegExp(/(?<=-pid-)(.*)(?=-ml_count)/);
-        return regex.exec(str);
-    };
-
     // if the cookie does not match the parameter, update the cookie with the parameter value
 
     if (pidMatch === false){
@@ -46,8 +45,6 @@ var integrateMarketLincGlobal = function(){
 
     // on click, pass through the pid cookie as a parameter, appended to the url 
 
-
-
     if (getParameterByName('pid')!= null){
         var tempPid = getParameterByName('pid');
         var tempPidCookie = getCookie('pid');
@@ -58,11 +55,6 @@ var integrateMarketLincGlobal = function(){
             setCookie('pid', tempPidCookie, '', '/');
            setPid();
         }
-    }
-
-    if (getCookie("lae_vid") != false) {
-        old_lae_vid = getCookie("lae_vid");
-        setCookie("Old_lae_vid", old_lae_vid);
     }
 
     // if (getParameterByName("lae_vid") != null) {
