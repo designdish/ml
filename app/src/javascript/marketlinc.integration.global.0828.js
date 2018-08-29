@@ -25,6 +25,7 @@ var integrateMarketLincGlobal = function(){
 
     // check if the pid cookie is the same as the pid parameter
 
+    var pidMatch = (matchParam('pid'));
    
 
     var getPidSubParameter = function(str){
@@ -40,7 +41,7 @@ var integrateMarketLincGlobal = function(){
 
     // if the cookie does not match the parameter, update the cookie with the parameter value
 
-    if (matchParam('pid') = false){
+    if (pidMatch = false){
         var tempPid = getParameterByName(pid);
         var pastPid = getPidSubParameter(pidCookie);
         tempPid = pidCookie.replace(pastPid, "");
