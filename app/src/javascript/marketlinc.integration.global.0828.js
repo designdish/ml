@@ -18,7 +18,7 @@ var integrateMarketLincGlobal = function(){
 
     // check for passed parameter
 
-    var pidParam = getParameterByName('pid') = null ? "" : getParameterByName('pid'); 
+    var pidParam = (getParameterByName('pid') === null) ? "" : getParameterByName('pid'); 
 
 
     // check for a cookie
