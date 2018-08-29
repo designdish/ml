@@ -4,7 +4,7 @@ var checkParams = function(url, arr) {
         var paramVal = getValue(param);
 
         if (paramVal.indexOf('-pidEnd-') != -1) {
-            paramVal = trimParam(param, '-pidEnd-');
+            paramVal = trimParam(paramVal, '-pidEnd-');
         }
         if (paramVal === null) {
             paramVal = getCookie(param);
