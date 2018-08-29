@@ -35,6 +35,7 @@ var integrateMarketLincGlobal = function(){
         return out;
     };
 
+    matchedParam();
     // if the cookie does not match the parameter, update the cookie with the parameter value
 
     if (!matchedParam){
