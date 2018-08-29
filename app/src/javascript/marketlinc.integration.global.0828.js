@@ -45,17 +45,15 @@ var integrateMarketLincGlobal = function(){
 
     // on click, pass through the pid cookie as a parameter, appended to the url 
 
-    if (getParameterByName('pid')!= null){
-        var tempPid = getParameterByName('pid');
-        var tempPidCookie = getCookie('pid');
-        if (tempPidCookie.indexOf(tempPid) != -1){
-            setPid();
-        }else{
-            tempPidCookie = updateJoinedParameters('pid', 'pid', tempPid);
-            setCookie('pid', tempPidCookie, '', '/');
-           setPid();
-        }
-    }
+    // if (pidParam != null){
+    //     if (tempPidCookie.indexOf(tempPid) != -1){
+    //         setPid();
+    //     }else{
+    //         tempPidCookie = updateJoinedParameters('pid', 'pid', tempPid);
+    //         setCookie('pid', tempPidCookie, '', '/');
+    //        setPid();
+    //     }
+    // }
 
     // if (getParameterByName("lae_vid") != null) {
     //     syncCookies(mlp);
