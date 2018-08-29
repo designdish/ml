@@ -42,7 +42,7 @@ var integrateMarketLincGlobal = function(){
     // if the cookie does not match the parameter, update the cookie with the parameter value
 
     if (pidMatch === false){
-        var tempPid = getParameterByName(pid);
+        var tempPid = getParameterByName('pid');
         var pastPid = getPidSubParameter(pidCookie);
         tempPid = pidCookie.replace(pastPid, "");
         var newPid = pidParam + pastPid;
