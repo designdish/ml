@@ -1,3 +1,17 @@
+ var matchParam = function (str){
+    var param = getParameterByName(str),
+        cookie = getCookie(str);
+    if (param === cookie){
+        return true;
+    }
+    if (cookie.indexOf(param) != -1){
+        return true;
+    }
+    else{
+        return false
+    }
+};
+
 var integrateMarketLincGlobal = function(){
 
     var buyLink = "newtvorder.aspx";
@@ -11,18 +25,7 @@ var integrateMarketLincGlobal = function(){
 
     // check if the pid cookie is the same as the pid parameter
 
-    var matchedParam = function (){
-        if (pidParam === pidCookie){
-            return true;
-        }
-
-        if (pidCookie.indexOf(pidParam) != -1){
-            return true;
-        }
-        else{
-            return false
-        }
-    };
+   
 
     var getPidSubParameter = function(str){
         var regex = new RegExp(/(?<=-pid-)(.*)(?=-ml_count)/),
@@ -35,14 +38,14 @@ var integrateMarketLincGlobal = function(){
         return out;
     };
 
-    matchedParam();
     // if the cookie does not match the parameter, update the cookie with the parameter value
 
-    if (!matchedParam){
-        var tempPid = pidParam;
+    if (matchParam('pid') = false){
+        var tempPid = getParameterByName(pid);
         var pastPid = getPidSubParameter(pidCookie);
         tempPid = pidCookie.replace(pastPid, "");
         var newPid = pidParam + pastPid;
+        console.log("the new pid is " + newPid);
     };
 
     // on click, pass through the pid cookie as a parameter, appended to the url 
