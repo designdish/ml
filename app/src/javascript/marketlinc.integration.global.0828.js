@@ -37,9 +37,9 @@ var integrateMarketLincGlobal = function(){
 
     if (pidMatch === false){
         var tempPid = getParameterByName('pid');
-        var pastPid = getPidSubParameter(pidCookie);
+        var passedPid = getPidSubParameter(pidCookie);
         tempPid = pidCookie.replace('-pid-' + pastPid[0], "");
-        var newPid = '-pid-' + pidParam + pastPid[0] + tempPid;
+        var newPid = '-pid-' + pidParam + passedPid[0] + tempPid;
         console.log("the new pid is " + newPid);
     };
 
@@ -62,6 +62,6 @@ var integrateMarketLincGlobal = function(){
     waitFor(window.liveagentExt).then(function() {
         setPid()
         console.log(getCookie("pid"));
-        waitFor(window.initLinks).then(initLinks(mlp, buyLink));
+        waitFor(window.initLinks).then(initLinks(mlp, buyLink, mlp));
     });
 };

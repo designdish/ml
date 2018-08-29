@@ -22,6 +22,7 @@ var setPid = function(str) {
         pidBase = "";
     }
     if (pidBase != "") {
+        setCookie('passed_pid_parameter', pidBase);
         pid = pidBase;
         if (ENVisitCommercialScore != false || PageVisitCommercialScore != false) {
             if (ENVisitCommercialScore.indexOf(pidBase) != -1 || (PageVisitCommercialScore.indexOf(pidBase) != -1)) {
