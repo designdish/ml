@@ -11,6 +11,8 @@ var updateLink = function(params, str, event) {
 	} else if (linkURL.indexOf(str) === -1) {
 		if (currentDomain.indexOf(tvURL) != -1){
 			window.location = link.href + currentParams;
+		}else{
+			window.location = link.href;
 		}
 	}
 };

@@ -45,7 +45,7 @@ var setPid = function(str) {
     }
     // pidParam = pidParam.substring(0, pidParam.indexOf(tempClosing));
 
-    if (getCookie('pid') !== pidParam && pidParam !=== undefined) {
+    if (getCookie('pid') !== pidParam && pidParam != undefined) {
         var cExpires = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
         var wwwDomain = "/;domain=" + window.location.hostname;
         setCookie('pid', pidParam);
