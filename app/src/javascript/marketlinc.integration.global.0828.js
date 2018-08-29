@@ -38,7 +38,7 @@ var integrateMarketLincGlobal = function(){
     if (pidMatch === false){
         var tempPid = getParameterByName('pid');
         var passedPid = getPidSubParameter(pidCookie);
-        tempPid = pidCookie.replace('-pid-' + pastPid[0], "");
+        tempPid = pidCookie.replace('-pid-' + passedPid[0], "");
         var newPid = '-pid-' + pidParam + passedPid[0] + tempPid;
         console.log("the new pid is " + newPid);
     };
