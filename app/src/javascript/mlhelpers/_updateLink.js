@@ -13,8 +13,8 @@ var updateLink = function(params, str, event) {
 		// }
 	} else if (linkURL.indexOf(str) === -1) {
 		window.location = link.href + currentParams;
-	} else {
-		console.dir(link.href);
-		window.location = link.href;
-	}
+	} 
+	console.dir(link.href);
+	window.location = link.href;
+
 };
