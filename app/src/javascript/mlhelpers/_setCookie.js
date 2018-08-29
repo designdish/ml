@@ -17,12 +17,5 @@ var setCookie = function(cName, cValue, cExpires, cPath) {
         cPath;
 
     cCount++;
-    console.dir(
-        "the cookie value for " +
-        cName +
-        " was the number " +
-        cCount +
-        " cookie manipulated since pageload"
-    );
     return cValue;
 };

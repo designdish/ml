@@ -17,8 +17,5 @@ var updateJoinedParameters = function(joinValue, param, paramVal) {
     }
 
     var paramText = temp + "" + param + "-" + paramVal;
-    console.dir(
-        "joined parameters " + baseParam + "-" + newParam + "-" + paramText
-    );
     return baseParam + "-" + newParam + paramText;
 };

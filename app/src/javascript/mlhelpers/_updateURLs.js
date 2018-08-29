@@ -18,7 +18,6 @@ var updateURLs = function(params, str, joinParams) {
                     joinParams[1]
                 );
             }
-            console.log(link.href);
         }
     }
 };
