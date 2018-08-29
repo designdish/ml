@@ -30,7 +30,7 @@ var integrateMarketLincGlobal = function(){
 
     var getPidSubParameter = function(str){
         var regex = new RegExp(/(?<=-pid-)(.*)(?=-ml_count)/);
-        return str.replace(regex);
+        return regex.exec(str);
     };
 
     // if the cookie does not match the parameter, update the cookie with the parameter value
