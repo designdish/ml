@@ -45,6 +45,8 @@ var setPid = function(str) {
         var wwwDomain = "/;domain=" + window.location.hostname;
         setCookie('pid', pidParam);
         setCookie('pid', pidParam, cExpires, "/");
+        setCookie('pid', pidParam, cExpires, "." + wwwDomain);
+
     }
 
     return (pidParam);
