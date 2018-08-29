@@ -25,7 +25,7 @@ var integrateMarketLincGlobal = function(){
     };
 
     var getPidSubParameter = function(str){
-        var regex = new RegExp(?<=-pid)(.*)(?=-ml_count),
+        var regex = new RegExp(/(?<=-pid-)(.*)(?=-ml_count)/),
         text = str,
         result, 
         out = [];
