@@ -41,7 +41,7 @@ var setPid = function(str) {
     }
 
     if (pidBase.indexOf(pidRoot) === -1){
-        pidParam = '-pid-' + pidBase + '-ml_count-' + ml_count + '-ml_acc-' + ml_acc + '-ml_eg-' + ml_eg + '-lae_eg-' + lae_eg + '-lae_vid-' + lae_vid + tempClosing;
+        pidParam = '-pid-' + pidRoot + '-ml_count-' + ml_count + '-ml_acc-' + ml_acc + '-ml_eg-' + ml_eg + '-lae_eg-' + lae_eg + '-lae_vid-' + lae_vid + tempClosing;
     }
     // pidParam = pidParam.substring(0, pidParam.indexOf(tempClosing));
 
@@ -50,7 +50,7 @@ var setPid = function(str) {
         var wwwDomain = "/;domain=" + window.location.hostname;
         setCookie('pid', pidParam);
         setCookie('pid', pidParam, cExpires, "/");
-        setCookie('pid', pidParam, cExpires, "." + wwwDomain);
+        setCookie('pid', pidParam, cExpires, "." + wwwDomain + "/");
     }
 
     return (pidParam);
