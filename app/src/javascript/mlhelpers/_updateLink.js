@@ -8,8 +8,9 @@ var updateLink = function(params, str, event) {
 	if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1) {
 		link.href = checkParams(linkURL, params);
 		window.location = link.href;
-
 	} else if (linkURL.indexOf(str) === -1) {
-		window.location = link.href + currentParams;
+		if (currentDomain.indexOf(tvURL) != -1){
+			window.location = link.href + currentParams;
+		}
 	}
 };
