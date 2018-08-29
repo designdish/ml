@@ -1,4 +1,53 @@
 var integrateMarketLincGlobal = function(){
+
+    var buyLink = "newtvorder.aspx";
+
+    // check for passed parameter
+
+    var pidParam = getParameterByName('pid'); 
+
+    // check for a cookie
+    var pidCookie = getCookie('pid');
+
+    // check if the pid cookie is the same as the pid parameter
+
+    var matchedParam = function (){
+        if (pidParam === pidCookie){
+            return true;
+        }
+
+        if (pidCookie.indexOf(pidParam) != -1){
+            return true;
+        }
+        else{
+            return false
+        }
+    };
+
+    var getPidSubParameter = function(str){
+        var regex = new RegExp(?<=-pid)(.*)(?=-ml_count),
+        text = str,
+        result, 
+        out = [];
+        while(result = regex.exec(text)){
+            out.push(result[1]);
+        }
+        return out;
+    };
+
+    // if the cookie does not match the parameter, update the cookie with the parameter value
+
+    if (!matchedParam){
+        var tempPid = pidParam;
+        var pastPid = getPidSubParameter(pidCookie);
+        tempPid = pidCookie.replace(pastPid, "");
+        var newPid = pidParam + pastPid;
+    };
+
+    // on click, pass through the pid cookie as a parameter, appended to the url 
+
+
+
     if (getParameterByName('pid')!= null){
         var tempPid = getParameterByName('pid');
         var tempPidCookie = getCookie('pid');
@@ -11,25 +60,17 @@ var integrateMarketLincGlobal = function(){
         }
     }
 
-    setPid()
-
-    for (var i = mlp.length - 1; i >= 0; i--) {
-        logCookie(mlp[i]);
-    }
-
-    var buyLink = "newtvorder.aspx";
-
     if (getCookie("lae_vid") != false) {
         old_lae_vid = getCookie("lae_vid");
         setCookie("Old_lae_vid", old_lae_vid);
     }
 
-    if (getParameterByName("lae_vid") != null) {
-        syncCookies(mlp);
-    }
+    // if (getParameterByName("lae_vid") != null) {
+    //     syncCookies(mlp);
+    // }
 
     waitFor(window.liveagentExt).then(function() {
-
+        setPid()
         console.log(getCookie("pid"));
         waitFor(window.initLinks).then(initLinks(mlp, buyLink));
     });
