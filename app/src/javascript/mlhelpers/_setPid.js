@@ -34,10 +34,11 @@ var setPid = function(str) {
         pid = pidBase;
     }
 
-
-
-
-    pidParam = '-pid-' + pidBase + '-ml_count-' + ml_count + '-ml_acc-' + ml_acc + '-ml_eg-' + ml_eg + '-lae_eg-' + lae_eg + '-lae_vid-' + lae_vid + tempClosing;
+    var pidRoot = getParameterByName('pid');
+    
+    if (pidBase.indexOf(pidRoot) != -1){
+        pidParam = '-pid-' + pidBase + '-ml_count-' + ml_count + '-ml_acc-' + ml_acc + '-ml_eg-' + ml_eg + '-lae_eg-' + lae_eg + '-lae_vid-' + lae_vid + tempClosing;
+    }
     // pidParam = pidParam.substring(0, pidParam.indexOf(tempClosing));
 
     if (getCookie('pid') !== pidParam) {
