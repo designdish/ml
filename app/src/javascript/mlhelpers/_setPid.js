@@ -1,9 +1,9 @@
 var setPid = function(str) {
     // this could be the cookie or a passed parameter
     var passedPidParameter =
-        getParameterByName("pid") === null
-            ? getCookie("passed_pid_parameter")
-            : getParameterByName("pid");
+        getParameterByName("pid") === null ?
+        getCookie("passed_pid_parameter") :
+        getParameterByName("pid");
     var ml_eg = getValue("ml_eg"),
         ml_count = getValue("ml_count"),
         lae_eg = getValue("lae_eg"),
@@ -46,33 +46,35 @@ var setPid = function(str) {
             console.log(
                 "pid cookie and parameter have been mutated and are equal"
             );
-        setCookie("tempPid", passedPidParameter);
+            setCookie("tempPid", passedPidParameter);
 
         } else {
             console.log("pid cookie is not equal to pid parameter");
             if (pidParameterMutation === false || pidCookieMutation === false) {
                 console.log("neither pid parameter or cookie has not been mutated");
-                pidParam ="-pid-" + passedPidParameter + mlString + tempClosing;
+                pidParam = "-pid-" + passedPidParameter + mlString + tempClosing;
                 setDupCookies();
             }
             if (pidParameterMutation === true || pidCookieMutation === false) {
                 console.log("pid cookie has not been mutated");
-                pidParam ="-pid-" + passedPidParameter + mlString + tempClosing;
+                pidParam = "-pid-" + passedPidParameter + mlString + tempClosing;
                 setDupCookies();
-                }
+            }
             if (pidParameterMutation === false || pidCookieMutation === true) {
                 console.log("pid parameter has not been mutated");
-                pidParam ="-pid-" + passedPidParameter + mlString + tempClosing;
+                pidParam = "-pid-" + passedPidParameter + mlString + tempClosing;
                 setDupCookies();
             }
         }
     } else {
         pidParam = "-pid-" + passedPidParameter + mlString + tempClosing;
         setCookie("tempPid", passedPidParameter);
+        //let's see if this breaks anything...
+        setDupCookies();
     }
 
-    function setDupCookies(){
-    if (getCookie("pid") !== pidParam && pidParam != undefined) {
+    function setDupCookies() {
+        if (getCookie("pid") !== pidParam && pidParam != undefined) {
             var cExpires = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
             var wwwDomain = "/;domain=" + window.location.hostname;
             setCookie("pid", pidParam);
