@@ -46,8 +46,7 @@ var setPid = function(str) {
             console.log(
                 "pid cookie and parameter have been mutated and are equal"
             );
-            setCookie("tempPid", passedPidParameter);
-
+            setTempPid();
         } else {
             console.log("pid cookie is not equal to pid parameter");
             if (pidParameterMutation === false || pidCookieMutation === false) {
@@ -68,9 +67,20 @@ var setPid = function(str) {
         }
     } else {
         pidParam = "-pid-" + passedPidParameter + mlString + tempClosing;
-        setCookie("tempPid", passedPidParameter);
+        setTempPid();
         //let's see if this breaks anything...
         setDupCookies();
+    }
+
+    function setTempPid(){
+
+        if (currentDomain.indexOf(tvURL) != -1){
+            var USPid = getCookie('tempPid');
+            USPid = getPidSubParameter(usPid);
+            setCookie("tempPid", usPid);
+        }else{
+            setCookie("tempPid", passedPidParameter);
+        }
     }
 
     function setDupCookies() {
