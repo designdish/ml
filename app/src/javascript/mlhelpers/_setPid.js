@@ -10,10 +10,10 @@ var setPid = function(str) {
         } else if (currentDomain.indexOf(tvUSURL) != -1) {
             p = pd;
         } else {
-            p = "";
+            p = "___";
         }
         if ((p === false) || (p === undefined)) {
-            p = "";
+            p = "___";
         }
         if (p.indexOf('-pid-') != -1) {
             p = getPidSubParameter(p);
