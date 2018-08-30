@@ -1,9 +1,23 @@
 var setPid = function(str) {
     // this could be the cookie or a passed parameter
-    var passedPidParameter =
-        getParameterByName("pid") === null ?
-        getCookie("passed_pid_parameter") :
-        getParameterByName("pid");
+    var passedPid = function() {
+        var p;
+        if (currentDomain.indexOf(tvURL)) {
+            p = getParameterByName("pid") === null ?
+                getCookie("passed_pid_parameter") :
+                getParameterByName("pid");
+        }
+        if (currentDomain.indexOf(tvUSURL)) {
+            p = getParameterByName("tempPid") === null ?
+                getCookie("tempPid") :
+                getParameterByName("tempPid");
+        } else {
+            p = "";
+        }
+        return p;
+    };
+
+    var passedPidParameter = passedPid();
     var ml_eg = getValue("ml_eg"),
         ml_count = getValue("ml_count"),
         lae_eg = getValue("lae_eg"),
