@@ -15,7 +15,6 @@ var setPid = function(str) {
         mlString = '-ml_count-' + ml_count + '-ml_acc-' + ml_acc + '-ml_eg-' + ml_eg + '-lae_eg-' + lae_eg + '-lae_vid-' + lae_vid;
         // this could only be the parameter or nothing
         pidRoot = (getParameterByName('pid') === null) ? "" : getParameterByName('pid');
-        pidParam;
 
     if (passedPidParameter === undefined) {
         passedPidParameter = "";
