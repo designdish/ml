@@ -3,14 +3,14 @@ var setPid = function(str) {
     var passedPid = function() {
         var p;
         if (currentDomain.indexOf(tvURL) != -1) {
-            p = getParameterByName("pid") === null ?
-                getCookie("passed_pid_parameter") :
-                getParameterByName("pid");
-        }
-        if (currentDomain.indexOf(tvUSURL) != -1) {
             p = getParameterByName("tempPid") === null ?
                 getCookie("tempPid") :
                 getParameterByName("tempPid");
+        }
+        if (currentDomain.indexOf(tvUSURL) != -1) {
+            p = getParameterByName("pid") === null ?
+                getCookie("pid") :
+                getParameterByName("pid");
         } else {
             p = "";
         }
@@ -89,10 +89,8 @@ var setPid = function(str) {
     function setTempPid() {
 
         if (currentDomain.indexOf(tvURL) != -1) {
-            if (getCookie(tempPid === null)) {
-                var USPid = getParameterByName('tempPid');
-                setCookie("tempPid", USPid);
-            }
+            var USPid = getParameterByName('tempPid');
+            setCookie("tempPid", USPid);
         } else {
             setCookie("tempPid", passedPidParameter);
         }
