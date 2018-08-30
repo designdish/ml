@@ -3,15 +3,15 @@ var checkParams = function(url, arr) {
         var param = arr[i];
         var paramVal = getValue(param);
 
-        function populatePid(){ 
+        (function populatePid(){ 
             if(param === "pid"){
-                paramVal = newPid;
+                paramVal = setPid();
             };
 
             if (paramVal.indexOf('-pidEnd-') != -1) {
                 paramVal = trimParam(paramVal, '-pidEnd-');
             }
-        }
+        })();
 
         if (paramVal === null) {
             paramVal = getCookie(param);

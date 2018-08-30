@@ -13,7 +13,7 @@ var setPid = function(str) {
         ENVisitCommercialScore = getCookie('ENVisitCommercialScore'),
         PageVisitCommercialScore = getCookie('PageVisitCommercialScore'),
         tempPid = getParameterByName('pid', ENVisitCommercialScore),
-        marketLincValues = [passedPidParameter, ml_eg, ml_count, lae_eg, ml_acc, lae_vid],
+        marketLincValues = [ml_eg, ml_count, lae_eg, ml_acc, lae_vid],
         mlString = '-ml_count-' + ml_count + '-ml_acc-' + ml_acc + '-ml_eg-' + ml_eg + '-lae_eg-' + lae_eg + '-lae_vid-' + lae_vid;
         // this could only be the parameter or nothing
         pidRoot = (getParameterByName('pid') === null) ? "" : getParameterByName('pid');
@@ -46,7 +46,7 @@ var setPid = function(str) {
             }
         }else {
             console.log('pid cookie is not equal to pid parameter');
-            if (pidParameterMutation === false  || pidCookieMutation === false){
+            if ((pidParameterMutation === false)  || (pidCookieMutation === false)){
                 pidParam = '-pid-' + passedPidParameter + mlString + tempClosing;
             }
         }
