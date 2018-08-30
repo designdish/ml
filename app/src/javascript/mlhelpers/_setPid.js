@@ -16,8 +16,7 @@ var setPid = function(str) {
             p = "";
         }
         if (p.indexOf('-pid-') != -1) {
-            p = getPidSubParameter(p);
-            p = p.replace(/,/g, '');
+            p = "";
         }
         return p;
     };
