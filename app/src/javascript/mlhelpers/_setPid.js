@@ -1,23 +1,22 @@
 var setPid = function(str) {
     // this could be the cookie or a passed parameter
     var passedPid = function() {
-        var p;
+        var p, tmp, pd;
+        tmp = getValue("tempPid");
+        pd = getValue("pid");
+
         if (currentDomain.indexOf(tvURL) != -1) {
-            p = getParameterByName("tempPid") === null ?
-                getCookie("tempPid") :
-                getParameterByName("tempPid");
+            p = tmp;
         } else if (currentDomain.indexOf(tvUSURL) != -1) {
-            p = getParameterByName("pid") === null ?
-                getCookie("pid") :
-                getParameterByName("pid");
+            p = pd;
         } else {
             p = "";
         }
-        if (p === false) {
+        if ((p === false) || (p === undefined)) {
             p = "";
         }
         if (p.indexOf('-pid-') != -1) {
-            getPidSubParameter(p);
+            p = "";
         }
         return p;
     };
