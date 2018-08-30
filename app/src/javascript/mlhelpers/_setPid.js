@@ -51,7 +51,7 @@ var setPid = function(str) {
             }
         }
         setCookie('tempPid', pidParam);
-    });
+    })();
 
     
     if (passedPidParameter != "") {
