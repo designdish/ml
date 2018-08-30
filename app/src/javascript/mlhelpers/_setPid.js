@@ -18,7 +18,7 @@ var setPid = function(str) {
         // this could only be the parameter or nothing
         pidRoot = (getParameterByName('pid') === null) ? "" : getParameterByName('pid');
 
-    if (passedPidParameter === undefined) {
+    if ((passedPidParameter === false) || (passedParameter === undefined)) {
         passedPidParameter = "";
     }   
 
