@@ -52,18 +52,18 @@ var setPid = function(str) {
             if (pidParameterMutation === false || pidCookieMutation === false) {
                 console.log("neither pid parameter or cookie has not been mutated");
                 pidParam = "-pid-" + passedPidParameter + mlString + tempClosing;
-                setDupCookies();
             }
             if (pidParameterMutation === true || pidCookieMutation === false) {
                 console.log("pid cookie has not been mutated");
                 pidParam = "-pid-" + passedPidParameter + mlString + tempClosing;
-                setDupCookies();
             }
             if (pidParameterMutation === false || pidCookieMutation === true) {
                 console.log("pid parameter has not been mutated");
                 pidParam = "-pid-" + passedPidParameter + mlString + tempClosing;
-                setDupCookies();
             }
+            setTempPid();
+            setDupCookies();
+
         }
     } else {
         pidParam = "-pid-" + passedPidParameter + mlString + tempClosing;
@@ -72,13 +72,13 @@ var setPid = function(str) {
         setDupCookies();
     }
 
-    function setTempPid(){
+    function setTempPid() {
 
-        if (currentDomain.indexOf(tvURL) != -1){
+        if (currentDomain.indexOf(tvURL) != -1) {
             var USPid = getCookie('tempPid');
             USPid = getPidSubParameter(usPid);
             setCookie("tempPid", usPid);
-        }else{
+        } else {
             setCookie("tempPid", passedPidParameter);
         }
     }
