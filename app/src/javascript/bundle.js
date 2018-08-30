@@ -16,6 +16,7 @@ var loadBundle =
         load.js(buildUrl(helperCDN, "_isEqual.js")),
         load.js(buildUrl(helperCDN, "_samePageNavigation.js")),
         load.js(buildUrl(helperCDN, "_getClosest.js")),
+        load.js(buildUrl(helperCDN, "_checkStringForSubs.js")),
         console.log("global helpers loaded @ " + today)
     ]).then(
 
