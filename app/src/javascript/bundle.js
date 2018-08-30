@@ -17,7 +17,7 @@ var loadBundle =
         load.js(buildUrl(helperCDN, "_samePageNavigation.js")),
         load.js(buildUrl(helperCDN, "_getClosest.js")),
         load.js(buildUrl(helperCDN, "_checkStringForSubstrings.js")),
-        console.log("global helpers loaded @ " + today)
+        // console.log("global helpers loaded @ " + today)
     ]).then(
 
         // load parameter functions
@@ -31,7 +31,7 @@ var loadBundle =
             load.js(buildUrl(helperCDN, "_joinParams.js")),
             load.js(buildUrl(helperCDN, "_updateJoinedParams.js")),
             load.js(buildUrl(helperCDN, "_updateParams.js")),
-            console.log("param helpers loaded @ " + today)
+            // console.log("param helpers loaded @ " + today)
         ])).then(
 
         // load cookie functions
@@ -42,7 +42,7 @@ var loadBundle =
             load.js(buildUrl(helperCDN, "_setCookie.js")),
             load.js(buildUrl(helperCDN, "_updateCookie.js")),
             load.js(buildUrl(helperCDN, "_syncCookies.js")),
-            console.log("cookie helpers loaded @ " + today)
+            // console.log("cookie helpers loaded @ " + today)
         ])).then(
 
         // load value functions
@@ -50,13 +50,13 @@ var loadBundle =
             load.js(buildUrl(helperCDN, "_getValue.js")),
             load.js(buildUrl(helperCDN, "_initLinks.js")),
             load.js(buildUrl(helperCDN, "_updateLink.js")),
-            console.log("value helpers loaded @ " + today)
+            // console.log("value helpers loaded @ " + today)
         ])).then(
 
         // load partner id functions
         Promise.all([
             load.js(buildUrl(helperCDN, "_setPid.js")),
-            console.log("pid helpers loaded @ " + today)
+            // console.log("pid helpers loaded @ " + today)
         ])).then(
 
         // load integration of functions into application
@@ -64,6 +64,6 @@ var loadBundle =
             load.js(buildUrl(distCDN, "marketlinc.integration.us.0828.js")),
             load.js(buildUrl(distCDN, "marketlinc.integration.global.0828.js")),
             load.js(buildUrl(distCDN, "marketlinc.integration.0827.js")),
-            console.log("integration helpers loaded @ " + today)
+            // console.log("integration helpers loaded @ " + today)
         ])
     );

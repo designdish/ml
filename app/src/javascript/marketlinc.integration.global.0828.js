@@ -17,7 +17,7 @@ var getPidSubParameter = function(str){
     return regex.exec(str);
 };
 
-var integrateMarketLincGlobal = function(){
+var integrateMarketLincGlobal = function(param){
 
     var buyLink = "newtvorder.aspx";
 

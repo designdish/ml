@@ -54,33 +54,33 @@ var setPid = function(str) {
     })();
 
     
-    if (passedPidParameter != "") {
-        setCookie('passed_pid_parameter', passedPidParameter);
-        if (ENVisitCommercialScore != false || PageVisitCommercialScore != false) {
-            if (ENVisitCommercialScore.indexOf(passedPidParameter) != -1 || (PageVisitCommercialScore.indexOf(passedPidParameter) != -1)) {
-                tempPid = getParameterByName('pid', ENVisitCommercialScore),
-                    tempClosing =tempPid.substring(0, tempPid.indexOf(tempClosing));
-            }
-        }
-    } 
+    // if (passedPidParameter != "") {
+    //     setCookie('passed_pid_parameter', passedPidParameter);
+    //     if (ENVisitCommercialScore != false || PageVisitCommercialScore != false) {
+    //         if (ENVisitCommercialScore.indexOf(passedPidParameter) != -1 || (PageVisitCommercialScore.indexOf(passedPidParameter) != -1)) {
+    //             tempPid = getParameterByName('pid', ENVisitCommercialScore),
+    //                 tempClosing =tempPid.substring(0, tempPid.indexOf(tempClosing));
+    //         }
+    //     }
+    // } 
 
 
-    if (matchParam("pid") === true){
-        console.log("cookie and parameter are match");
-        pidParam = '-pid-' + passedPidParameter + mlString + tempClosing;
-    }  else if (matchParam("pid") === false){
-        var tempPidCookie = getCookie("pid");
-        checkStringForSubs(tempPidCookie, pidRoot);
-    }
+    // if (matchParam("pid") === true){
+    //     console.log("cookie and parameter are match");
+    //     pidParam = '-pid-' + passedPidParameter + mlString + tempClosing;
+    // }  else if (matchParam("pid") === false){
+    //     var tempPidCookie = getCookie("pid");
+    //     checkStringForSubs(tempPidCookie, pidRoot);
+    // }
     
     
-    if (passedPidParameter.indexOf(pidRoot) != -1){
-        pidParam = '-pid-' + passedPidParameter + mlString + tempClosing;
-    }
+    // if (passedPidParameter.indexOf(pidRoot) != -1){
+    //     pidParam = '-pid-' + passedPidParameter + mlString + tempClosing;
+    // }
 
-    if (passedPidParameter.indexOf(pidRoot) === -1){
-        pidParam = '-pid-' + pidRoot + mlString + tempClosing;
-    }
+    // if (passedPidParameter.indexOf(pidRoot) === -1){
+    //     pidParam = '-pid-' + pidRoot + mlString + tempClosing;
+    // }
     // pidParam = pidParam.substring(0, pidParam.indexOf(tempClosing));
 
     if (getCookie('pid') !== pidParam && pidParam != undefined) {
