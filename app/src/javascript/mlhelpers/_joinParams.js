@@ -31,7 +31,7 @@ var joinParameters = function(url, baseParam, targetParam) {
                 updateParam(url, target, targetVal);
             }
 
-            setCookie(baseParam, newParamVal);
+            // setCookie(baseParam, newParamVal);
 
 
             result = updateParam(url, baseParam, newParamVal);
