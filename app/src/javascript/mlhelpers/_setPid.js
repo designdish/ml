@@ -16,17 +16,7 @@ var setPid = function(str) {
         PageVisitCommercialScore = getCookie("PageVisitCommercialScore"),
         tempPid = getParameterByName("pid", ENVisitCommercialScore),
         marketLincValues = [ml_eg, ml_count, lae_eg, ml_acc, lae_vid],
-        mlString =
-            "-ml_count-" +
-            ml_count +
-            "-ml_acc-" +
-            ml_acc +
-            "-ml_eg-" +
-            ml_eg +
-            "-lae_eg-" +
-            lae_eg +
-            "-lae_vid-" +
-            lae_vid;
+        mlString = "-ml_count-" + ml_count + "-ml_acc-" + ml_acc + "-ml_eg-" + ml_eg + "-lae_eg-" + lae_eg + "-lae_vid-" + lae_vid;
     // this could only be the parameter or nothing
     pidRoot =
         getParameterByName("pid") === null ? "" : getParameterByName("pid");
@@ -42,10 +32,7 @@ var setPid = function(str) {
     //check for mutation in the parameters and cookies
 
     var pidCookieMutation = checkStringForSubs(pidCookie, marketLincValues);
-    var pidParameterMutation = checkStringForSubs(
-        pidParameter,
-        marketLincValues
-    );
+    var pidParameterMutation = checkStringForSubs(pidParameter, marketLincValues);
 
     //check for equality in the parameter and cookie value
 
@@ -60,58 +47,25 @@ var setPid = function(str) {
         } else {
             console.log("pid cookie is not equal to pid parameter");
             if (pidParameterMutation === false || pidCookieMutation === false) {
-                console.log(
-                    "neither pid parameter or cookie has not been mutated"
-                );
-                pidParam =
-                    "-pid-" + passedPidParameter + mlString + tempClosing;
+                console.log("neither pid parameter or cookie has not been mutated");
+                pidParam ="-pid-" + passedPidParameter + mlString + tempClosing;
                 setCookie("tempPid", pidParam);
             }
             if (pidParameterMutation === true || pidCookieMutation === false) {
                 console.log("pid cookie has not been mutated");
-                pidParam =
-                    "-pid-" + passedPidParameter + mlString + tempClosing;
+                pidParam ="-pid-" + passedPidParameter + mlString + tempClosing;
                 setCookie("tempPid", pidParam);
             }
             if (pidParameterMutation === false || pidCookieMutation === true) {
                 console.log("pid parameter has not been mutated");
-                pidParam =
-                    "-pid-" + passedPidParameter + mlString + tempClosing;
+                pidParam ="-pid-" + passedPidParameter + mlString + tempClosing;
                 setCookie("tempPid", pidParam);
             }
         }
-        setCookie("tempPid", pidParam);
     } else {
         pidParam = "-pid-" + passedPidParameter + mlString + tempClosing;
         setCookie("tempPid", pidParam);
     }
-
-    // if (passedPidParameter != "") {
-    //     setCookie('passed_pid_parameter', passedPidParameter);
-    //     if (ENVisitCommercialScore != false || PageVisitCommercialScore != false) {
-    //         if (ENVisitCommercialScore.indexOf(passedPidParameter) != -1 || (PageVisitCommercialScore.indexOf(passedPidParameter) != -1)) {
-    //             tempPid = getParameterByName('pid', ENVisitCommercialScore),
-    //                 tempClosing =tempPid.substring(0, tempPid.indexOf(tempClosing));
-    //         }
-    //     }
-    // }
-
-    // if (matchParam("pid") === true){
-    //     console.log("cookie and parameter are match");
-    //     pidParam = '-pid-' + passedPidParameter + mlString + tempClosing;
-    // }  else if (matchParam("pid") === false){
-    //     var tempPidCookie = getCookie("pid");
-    //     checkStringForSubs(tempPidCookie, pidRoot);
-    // }
-
-    // if (passedPidParameter.indexOf(pidRoot) != -1){
-    //     pidParam = '-pid-' + passedPidParameter + mlString + tempClosing;
-    // }
-
-    // if (passedPidParameter.indexOf(pidRoot) === -1){
-    //     pidParam = '-pid-' + pidRoot + mlString + tempClosing;
-    // }
-    // pidParam = pidParam.substring(0, pidParam.indexOf(tempClosing));
 
     if (getCookie("pid") !== pidParam && pidParam != undefined) {
         var cExpires = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
