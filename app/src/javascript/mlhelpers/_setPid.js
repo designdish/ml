@@ -75,8 +75,7 @@ var setPid = function(str) {
     function setTempPid() {
 
         if (currentDomain.indexOf(tvURL) != -1) {
-            var USPid = getCookie('tempPid');
-            USPid = getPidSubParameter(USPid);
+            var USPid = getParameterByName('tempPid');
             setCookie("tempPid", USPid);
         } else {
             setCookie("tempPid", passedPidParameter);
