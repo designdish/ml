@@ -12,6 +12,7 @@ var setPid = function(str) {
         tempClosing = "-pidEnd-",
         pidCookie = getCookie("pid"),
         pidParameter = getParameterByName("pid"),
+        pidParam,
         ENVisitCommercialScore = getCookie("ENVisitCommercialScore"),
         PageVisitCommercialScore = getCookie("PageVisitCommercialScore"),
         tempPid = getParameterByName("pid", ENVisitCommercialScore),
@@ -41,6 +42,7 @@ var setPid = function(str) {
     if (pidEquality === true) {
         console.log("pid cookie is equal to pid parameter");
         if (pidCookieMutation === true && pidParameterMutation === true) {
+            pidParam ="-pid-" + passedPidParameter + mlString + tempClosing;
             console.log(
                 "pid cookie and parameter have been mutated and are equal"
             );
