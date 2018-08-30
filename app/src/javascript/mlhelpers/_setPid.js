@@ -71,6 +71,7 @@ var setPid = function(str) {
                 console.log("pid cookie has not been mutated");
                 pidParam =
                     "-pid-" + passedPidParameter + mlString + tempClosing;
+                setCookie("tempPid", pidParam);
             }
             if (pidParameterMutation === false || pidCookieMutation === true) {
                 console.log("pid parameter has not been mutated");
@@ -79,6 +80,9 @@ var setPid = function(str) {
                 setCookie("tempPid", pidParam);
             }
         }
+        setCookie("tempPid", pidParam);
+    } else {
+        pidParam = "-pid-" + passedPidParameter + mlString + tempClosing;
         setCookie("tempPid", pidParam);
     }
 
