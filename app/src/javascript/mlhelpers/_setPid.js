@@ -8,6 +8,7 @@ var setPid = function(str) {
         ml_acc = getValue('ml_acc'),
         lae_vid = getValue('lae_vid'),
         tempClosing = "-pidEnd-",
+        pidParam,
         ENVisitCommercialScore = getCookie('ENVisitCommercialScore'),
         PageVisitCommercialScore = getCookie('PageVisitCommercialScore'),
         tempPid = getParameterByName('pid', ENVisitCommercialScore),
