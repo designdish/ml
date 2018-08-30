@@ -90,7 +90,9 @@ var setPid = function(str) {
 
         if (currentDomain.indexOf(tvURL) != -1) {
             var USPid = getParameterByName('tempPid');
-            setCookie("tempPid", USPid);
+            if (USPid !== null) {
+                setCookie("tempPid", USPid);
+            }
         } else {
             setCookie("tempPid", passedPidParameter);
         }
