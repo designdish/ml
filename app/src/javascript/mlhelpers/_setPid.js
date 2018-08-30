@@ -13,8 +13,15 @@ var setPid = function(str) {
         } else {
             p = "";
         }
-        p = p.replace(/-pid-/g, "");
-        p = p.replace(/-pidEnd-/g, "");
+        if (p === false) {
+            p = "";
+        }
+        if (p.indexOf('-pid-') != -1) {
+            p = p.replace(/-pid-/g, "");
+        }
+        if (p.indexOf('-pidEnd-') != -1) {
+            p = p.replace(/-pidEnd-/g, "");
+        }
         return p;
     };
 
