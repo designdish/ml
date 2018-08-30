@@ -20,7 +20,7 @@ var integrateMarketLinc = function() {
         integrateMarketLincUS(newPid);
     }
 
-     if (currentDomain.indexOf(tvURL) != -1){
+    if (currentDomain.indexOf(tvURL) != -1){
         integrateMarketLincGlobal(newPid);
     }
 };
