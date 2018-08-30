@@ -6,8 +6,7 @@ var setPid = function(str) {
             p = getParameterByName("tempPid") === null ?
                 getCookie("tempPid") :
                 getParameterByName("tempPid");
-        }
-        if (currentDomain.indexOf(tvUSURL) != -1) {
+        } else if (currentDomain.indexOf(tvUSURL) != -1) {
             p = getParameterByName("pid") === null ?
                 getCookie("pid") :
                 getParameterByName("pid");
