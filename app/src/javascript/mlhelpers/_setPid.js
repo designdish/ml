@@ -13,6 +13,8 @@ var setPid = function(str) {
         } else {
             p = "";
         }
+        p = p.replace(/-pid-/g, "");
+        p = p.replace(/-pidEnd-/g, "");
         return p;
     };
 
