@@ -10,13 +10,14 @@ var setPid = function(str) {
         } else if (currentDomain.indexOf(tvUSURL) != -1) {
             p = pd;
         } else {
-            p = "___";
+            p = "";
         }
         if ((p === false) || (p === undefined)) {
-            p = "___";
+            p = "";
         }
         if (p.indexOf('-pid-') != -1) {
             p = getPidSubParameter(p);
+            p = p.replace(/,/g, '');
         }
         return p;
     };
