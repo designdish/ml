@@ -6,9 +6,9 @@ var setPid = function(str) {
         pd = getValue("pid");
 
         if (currentDomain.indexOf(tvURL) != -1) {
-            p = tmp;
+            p = (tmp != "") ? tmp : pd;
         } else if (currentDomain.indexOf(tvUSURL) != -1) {
-            p = pd;
+            p = (pd != "") ? pd : tmp;
         } else {
             p = "";
         }
