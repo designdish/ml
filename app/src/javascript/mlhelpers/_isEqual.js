@@ -1,7 +1,9 @@
 var isEqual = function(value, other) {
     var type = Object.prototype.toString.call(value);
     if (type !== Object.prototype.toString.call(other)) return false;
-    if (["[object Array]", "[object Object]"].indexOf(type) < 0) return false;
+
+    if (["[object Array]", "[object Object]", "[object String]"].indexOf(type) < 0) return false;
+    
     var valueLen =
         type === "[object Array]" ? value.length : Object.keys(value).length;
     var otherLen =
