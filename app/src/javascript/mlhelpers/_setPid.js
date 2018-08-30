@@ -51,22 +51,22 @@ var setPid = function(str) {
             if (pidParameterMutation === false || pidCookieMutation === false) {
                 console.log("neither pid parameter or cookie has not been mutated");
                 pidParam ="-pid-" + passedPidParameter + mlString + tempClosing;
-                setCookie("tempPid", pidParam);
+                setCookie("tempPid", passedPidParameter);
             }
             if (pidParameterMutation === true || pidCookieMutation === false) {
                 console.log("pid cookie has not been mutated");
                 pidParam ="-pid-" + passedPidParameter + mlString + tempClosing;
-                setCookie("tempPid", pidParam);
+                setCookie("tempPid", passedPidParameter);
             }
             if (pidParameterMutation === false || pidCookieMutation === true) {
                 console.log("pid parameter has not been mutated");
+                passedPidParameter = getCookie("tempPid");
                 pidParam ="-pid-" + passedPidParameter + mlString + tempClosing;
-                setCookie("tempPid", pidParam);
             }
         }
     } else {
         pidParam = "-pid-" + passedPidParameter + mlString + tempClosing;
-        setCookie("tempPid", pidParam);
+        setCookie("tempPid", passedPidParameter);
     }
 
     if (getCookie("pid") !== pidParam && pidParam != undefined) {
