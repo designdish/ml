@@ -3,15 +3,10 @@ var mlp = ["lae_vid", "lae_eg", "ml_eg", "ml_acc", "ml_count","pid"];
 var cCount = 0;
 var tvURL = "teamviewer.com";
 var tvUSURL = "teamviewer.us";
-var pidCookie;
-var newPid;
-var pidParameter;
 
 var integrateMarketLinc = function() {
-    pidCookie = getCookie("pid");
-    pidParameter = getParameterByName("pid");
-
     newPid = setPid();
+
     if (getCookie("ml_eg") === false) {
         setCookie("ml_eg", "DIRECT");
     }
@@ -22,13 +17,12 @@ var integrateMarketLinc = function() {
     }
 
     if (currentDomain.indexOf(tvUSURL) != -1){
-        integrateMarketLincUS();
+        integrateMarketLincUS(newPid);
     }
 
      if (currentDomain.indexOf(tvURL) != -1){
-        integrateMarketLincGlobal();
+        integrateMarketLincGlobal(newPid);
     }
-    
 };
 
 setTimeout(integrateMarketLinc, 1000);
