@@ -17,10 +17,7 @@ var setPid = function(str) {
             p = "";
         }
         if (p.indexOf('-pid-') != -1) {
-            p = p.replace(/-pid-/g, "");
-        }
-        if (p.indexOf('-pidEnd-') != -1) {
-            p = p.replace(/-pidEnd-/g, "");
+            getPidSubParameter(p);
         }
         return p;
     };
