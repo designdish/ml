@@ -106,7 +106,7 @@ var setPid = function(str) {
     function setDupCookies() {
         if (getCookie("pid") !== pidParam && pidParam != undefined) {
             var cExpires = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
-            var wwwDomain = "/;domain=" + window.location.hostname;
+            var wwwDomain = "/;domain=." + window.location.hostname;
             // setCookie("pid", pidParam);
             setCookie("pid", pidParam, cExpires, "/");
             // setCookie('pid', pidParam, cExpires, "." + wwwDomain + "/");
