@@ -3,10 +3,10 @@ var checkParams = function(url, arr) {
         var param = arr[i];
         var paramVal = getValue(param);
 
-        (function populatePid(){ 
-            if(param === "pid"){
+        (function populatePid() {
+            if (param === "pid") {
                 paramVal = setPid();
-            };
+            }
 
             if (paramVal.indexOf('-pidEnd-') != -1) {
                 paramVal = trimParam(paramVal, '-pidEnd-');
