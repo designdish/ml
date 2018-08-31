@@ -12,7 +12,6 @@ var syncCookies = function(cName) {
         absValue = getValue(cName);
         if (absValue != getCookie(cName)) {
             setCookie(cName, absValue);
-            setCookie(cName[i], absValue, '', '/');
         }
     }
 };
