@@ -107,7 +107,7 @@ var setPid = function(str) {
         if (getCookie("pid") !== pidParam && pidParam != undefined) {
             // var cExpires = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
             // setCookie("pid", pidParam);
-            //setCookie("pid", pidParam, cExpires, "/");
+            setCookie("pid", pidParam, cExpires, "/");
             setCookie('pid', pidParam, '', wwwDomain);
         }
     }
