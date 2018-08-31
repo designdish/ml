@@ -96,20 +96,19 @@ var setPid = function(str) {
         if (currentDomain.indexOf(tvURL) != -1) {
             var USPid = getParameterByName('tempPid');
             if (USPid !== null) {
-                setCookie("tempPid", USPid);
+                setCookie("tempPid", USPid, '', wwwDomain);
             }
         } else {
-            setCookie("tempPid", passedPidParameter);
+            setCookie("tempPid", passedPidParameter, '', wwwDomain);
         }
     }
 
     function setDupCookies() {
         if (getCookie("pid") !== pidParam && pidParam != undefined) {
-            var cExpires = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
-            var wwwDomain = "/;domain=." + window.location.hostname;
+            // var cExpires = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
             // setCookie("pid", pidParam);
             //setCookie("pid", pidParam, cExpires, "/");
-            setCookie('pid', pidParam, cExpires, wwwDomain);
+            setCookie('pid', pidParam, '', wwwDomain);
         }
     }
 
