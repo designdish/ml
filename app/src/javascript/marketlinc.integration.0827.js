@@ -6,7 +6,9 @@ var tvUSURL = "teamviewer.us";
 var wwwDomain = "/;domain=." + currentDomain;
 
 
+
 var integrateMarketLinc = function() {
+    var lae_vidCookie, us_lae_vidCookie, old_lae_vidCookie;
     newPid = setPid();
 
     if (getCookie("ml_eg") === false) {
@@ -15,13 +17,22 @@ var integrateMarketLinc = function() {
 
     //not sure if we need this, but i feel like we will...
     if (getCookie("ml_us_lae_vid") != false) {
-        var us_lae_vid = getCookie("ml_us_lae_vid");
-        setCookie("lae_vid", us_lae_vid);
+        us_lae_vidCookie = getCookie("ml_us_lae_vid");
+        lae_vidCookie = getCookie("lae_vid");
+        if (isEqual(us_lae_vidCookie, lae_vidCookie) === false) {
+            setCookie("lae_vid", us_lae_vidCookie);
+        }
     }
 
     if (getCookie("lae_vid") != false) {
-        old_lae_vid = getCookie("lae_vid");
-        setCookie("Old_lae_vid", old_lae_vid);
+        lae_vidCookie = getCookie("lae_vid");
+
+        if (getCookie("Old_lae_vid") != false) {
+            old_lae_vidCookie = getCookie("Old_lae_vid");
+        }
+        if (isEqual(old_lae_vidCookie, lae_vidCookie) === false) {
+            setCookie("Old_lae_vid", old_lae_vidCookie);
+        }
     }
 
     if (currentDomain.indexOf(tvUSURL) != -1) {
