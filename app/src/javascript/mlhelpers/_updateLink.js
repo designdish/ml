@@ -1,5 +1,5 @@
 //  a list of excluded elements that should not be updated
-var excludedLinks = ['firstFlip'];
+var excludedLinks = ['firstFlip', 'secondFlip'];
 
 var updateLink = function(params, str, event) {
     var link = event.target;
@@ -8,7 +8,7 @@ var updateLink = function(params, str, event) {
 
     var currentPage = window.location.href;
     var currentParams = window.location.search;
-    if (excludedLinks.indexOf(link.id) === -1) {
+    if (excludedLinks.indexOf(link.id) === -1 && link.href != "") {
         if (linkURL.indexOf(str) != -1 && linkURL.indexOf("mailto") === -1) {
             link.href = checkParams(linkURL, params);
             window.location = link.href;
