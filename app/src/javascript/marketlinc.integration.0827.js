@@ -15,26 +15,6 @@ var integrateMarketLinc = function() {
         setCookie("ml_eg", "DIRECT");
     }
 
-    //not sure if we need this, but i feel like we will...
-    // if (getCookie("ml_us_lae_vid") != false) {
-    //     us_lae_vidCookie = getCookie("ml_us_lae_vid");
-    //     lae_vidCookie = getCookie("lae_vid");
-    //     if (isEqual(us_lae_vidCookie, lae_vidCookie) === false) {
-    //         setCookie("lae_vid", us_lae_vidCookie);
-    //     }
-    // }
-
-    if (getCookie("lae_vid") != false) {
-        lae_vidCookie = getCookie("lae_vid");
-
-        if (getCookie("Old_lae_vid") != false) {
-            old_lae_vidCookie = getCookie("Old_lae_vid");
-        }
-        if (isEqual(old_lae_vidCookie, lae_vidCookie) === false) {
-            setCookie("Old_lae_vid", old_lae_vidCookie);
-        }
-    }
-
     if (currentDomain.indexOf(tvUSURL) != -1) {
         integrateMarketLincUS(newPid);
     }

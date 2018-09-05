@@ -42,6 +42,7 @@ var loadBundle =
             load.js(buildUrl(helperCDN, "_setCookie.js")),
             load.js(buildUrl(helperCDN, "_updateCookie.js")),
             load.js(buildUrl(helperCDN, "_syncCookies.js")),
+            load.js(buildUrl(helperCDN, "_copyCookie.js")),
             // console.log("cookie helpers loaded @ " + today)
         ])).then(
 
