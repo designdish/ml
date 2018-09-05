@@ -27,11 +27,12 @@
 
      // check for a cookie
      var pidCookie = getCookie('pid');
+     var mlValues = ["ml_eg", "ml_count", "lae_eg", "ml_acc", "lae_vid"];
 
-    for (i=0; mlp.length > i; i++){
-        p = getValue(mlp[i]);
+    for (i=0; mlValues.length > i; i++){
+        p = getValue(mlValues[i]);
             if (p != false && p != null){
-            setCookie(mlp[i], p);
+            setCookie(mlValues[i], p);
         }
     };
      // check if the pid cookie is the same as the pid parameter
