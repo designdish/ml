@@ -16,13 +16,13 @@ var integrateMarketLinc = function() {
     }
 
     //not sure if we need this, but i feel like we will...
-    if (getCookie("ml_us_lae_vid") != false) {
-        us_lae_vidCookie = getCookie("ml_us_lae_vid");
-        lae_vidCookie = getCookie("lae_vid");
-        if (isEqual(us_lae_vidCookie, lae_vidCookie) === false) {
-            setCookie("lae_vid", us_lae_vidCookie);
-        }
-    }
+    // if (getCookie("ml_us_lae_vid") != false) {
+    //     us_lae_vidCookie = getCookie("ml_us_lae_vid");
+    //     lae_vidCookie = getCookie("lae_vid");
+    //     if (isEqual(us_lae_vidCookie, lae_vidCookie) === false) {
+    //         setCookie("lae_vid", us_lae_vidCookie);
+    //     }
+    // }
 
     if (getCookie("lae_vid") != false) {
         lae_vidCookie = getCookie("lae_vid");
@@ -44,4 +44,4 @@ var integrateMarketLinc = function() {
     }
 };
 
-setTimeout(integrateMarketLinc, 1000);
+integrateMarketLinc();
