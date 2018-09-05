@@ -40,14 +40,7 @@ var integrateMarketLinc = function() {
     }
 
     if (currentDomain.indexOf(tvURL) != -1) {
-        (function(){
-            for (i=0; mlp.length > i; i++){
-            p = getValue(mlp[i]);
-            if (p != false && p != null){
-                setCookie(mlp[i], p);
-            }
-        }
-    }).then(integrateMarketLincGlobal(newPid));
+        integrateMarketLincGlobal(newPid);
     }
 };
 

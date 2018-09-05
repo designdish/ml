@@ -28,6 +28,12 @@
      // check for a cookie
      var pidCookie = getCookie('pid');
 
+    for (i=0; mlp.length > i; i++){
+        p = getValue(mlp[i]);
+            if (p != false && p != null){
+            setCookie(mlp[i], p);
+        }
+    };
      // check if the pid cookie is the same as the pid parameter
 
      // var pidMatch = (matchParam('pid'));
