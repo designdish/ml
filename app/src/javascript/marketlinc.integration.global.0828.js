@@ -31,7 +31,7 @@
 
     for (i=0; mlValues.length > i; i++){
         p = getValue(mlValues[i]);
-            if (p != false && p != null){
+            if (p != false && p != null && p != ""){
             setCookie(mlValues[i], p);
         }
     };
