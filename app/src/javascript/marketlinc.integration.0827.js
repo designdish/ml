@@ -8,17 +8,13 @@ var wwwDomain = "/;domain=." + currentDomain;
 
 
 var integrateMarketLinc = function() {
-    var lae_vidCookie, us_lae_vidCookie, old_lae_vidCookie;
-
     var newPid;
-    waitFor(window.setPid).then(function(){
-        newPid = setPid();
-    })
-    
 
     if (getCookie("ml_eg") === false) {
         setCookie("ml_eg", "DIRECT");
     }
+
+    newPid = setPid();
 
     if (currentDomain.indexOf(tvUSURL) != -1) {
         integrateMarketLincUS(newPid);
@@ -29,4 +25,4 @@ var integrateMarketLinc = function() {
     }
 };
 
-integrateMarketLinc();
+waitFor(window.setPid).then(integrateMarketLinc);
