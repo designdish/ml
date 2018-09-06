@@ -2,7 +2,7 @@
 
 var getCookie = function(cName) {
     var cStr = "; " + document.cookie;
-    var parts = value.split("; " + cName + "=");
+    var parts = cStr.split("; " + cName + "=");
     if (parts.length == 2) {
         cValue = parts.pop().split(";").shift();
         return cValue;
