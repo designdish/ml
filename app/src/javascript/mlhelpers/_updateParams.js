@@ -16,6 +16,12 @@ var updateParam = function(url, param, paramVal) {
             }
         }
     }
-    var paramText = temp + "" + param + "=" + paramVal;
-    return baseURL + "?" + newURL + paramText;
+    var paramText;
+    if (paramVal != "") {
+        paramText = temp + "" + param + "=" + paramVal;
+        return baseURL + "?" + newURL + paramText;
+
+    } else {
+        return baseURL + "?" + newURL;
+    }
 };
