@@ -24,22 +24,21 @@
 
      var pidParam = (getParameterByName('pid') === null) ? "" : getParameterByName('pid');
 
-
      // check for a cookie
      var pidCookie = getCookie('pid');
      var mlValues = ["ml_eg", "ml_count", "lae_eg", "ml_acc", "lae_vid"];
 
-    for (i=0; mlValues.length > i; i++){
-        p = getValue(mlValues[i]);
-            if (p != false && p != null && p != ""){
-            setCookie(mlValues[i], p);
-        }
-    };
+     for (i = 0; mlValues.length > i; i++) {
+         p = getValue(mlValues[i]);
+         if (p != false && p != null && p != "") {
+             setCookie(mlValues[i], p);
+         }
+     }
 
-    // on click, pass through the pid cookie as a parameter, appended to the url 
+     // on click, pass through the pid cookie as a parameter, appended to the url 
 
      waitFor(window.liveagentExt).then(function() {
-         copyCookie("lae_vid","Old_lae_vid");
+         copyCookie("lae_vid", "Old_lae_vid");
          setPid();
          waitFor(window.initLinks).then(initLinks(mlp, buyLink, mlp));
      });
