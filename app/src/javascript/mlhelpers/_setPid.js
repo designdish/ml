@@ -92,14 +92,15 @@ var setPid = function(str) {
     }
 
     function setTempPid() {
-
         if (currentDomain.indexOf(tvURL) != -1) {
             var USPid = getParameterByName('tempPid');
-            if (USPid !== null) {
+            if (USPid !== null && USPid !== '') {
                 setCookie("tempPid", USPid, '', wwwDomain);
             }
         } else {
-            setCookie("tempPid", passedPidParameter, '', wwwDomain);
+            if (passedPidParameter !== '') {
+                setCookie("tempPid", passedPidParameter, '', wwwDomain);
+            }
         }
     }
 
